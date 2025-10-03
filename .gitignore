@@ -1,0 +1,38 @@
+# Dependencias
+node_modules/
+frontend/node_modules/
+
+# Entornos
+.env
+
+# Archivos de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Archivos de compilación
+dist/
+build/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Angular
+frontend/general_template/.angular/cache
+frontend/general_template/coverage/
+frontend/general_template/dist/
+
+# Node.js
+package-lock.json
+yarn.lock
+
+# Archivos temporales
+*.tmp
+*~
