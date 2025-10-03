@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../database/connection";
-import {Task} from "./task";
+import sequelize from "../database/connection.js";
+import {Task} from "./task.js";
 
 export const ListeningTask = sequelize.define("ListeningTask", {
   task_id: {

@@ -1,11 +1,9 @@
 import type { Request, Response } from "express";
-import {
-  Task,
-  SpeakingTask,
-  ListeningTask,
-  ReadingTask,
-  WritingTask,
-} from "../models";
+import {Task} from "../models/task.js";
+import {SpeakingTask} from "../models/speakingTask.js";
+import {ListeningTask} from "../models/listeningTask.js";
+import {ReadingTask} from "../models/readingTask.js";
+import {WritingTask} from "../models/writingTask.js";
 
 export default {
   // Crear una tarea con su subtipo
