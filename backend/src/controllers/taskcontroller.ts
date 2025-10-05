@@ -1,15 +1,28 @@
 import type { Request, Response } from "express";
-import {Task} from "../models/task.js";
-import {SpeakingTask} from "../models/speakingTask.js";
-import {ListeningTask} from "../models/listeningTask.js";
-import {ReadingTask} from "../models/readingTask.js";
-import {WritingTask} from "../models/writingTask.js";
+import {
+  Task,
+  SpeakingTask,
+  ListeningTask,
+  ReadingTask,
+  WritingTask,
+  setupAssociations,
+} from "../models/index.js";
+
+// Initialize associations
+setupAssociations();
 
 export default {
   // Crear una tarea con su subtipo
   async createTask(req: Request, res: Response) {
     try {
       const { task_type, task_id, name_of_item_writer, team, date } = req.body;
+
+      if (task_id) {
+        const existingTask = await Task.findOne({ where: { task_id } });
+        if (existingTask) {
+          return res.status(400).json({ error: "task_id ya existe" });
+        }
+      }
 
       // Crear Task base
       const task = await Task.create({
@@ -22,11 +35,11 @@ export default {
 
       // Crear subtipo según task_type
       switch (task_type) {
-        case "speaking":
-          await SpeakingTask.create({ task_id: task_id, ...req.body });
-          break;
         case "listening":
           await ListeningTask.create({ task_id: task_id, ...req.body });
+          break;
+        case "speaking":
+          await SpeakingTask.create({ task_id: task_id, ...req.body });
           break;
         case "reading":
           await ReadingTask.create({ task_id: task_id, ...req.body });
