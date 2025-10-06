@@ -4,6 +4,7 @@ import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { error } from 'node:console';
 import { request } from 'node:http';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-see-listeningtasks',
@@ -54,17 +55,26 @@ export class SeeTasksComponent implements OnInit {
   }
 
   getListeningTasks() {
-    this._taskService.getTaskByType('listening').subscribe((data) => {
-      console.log(data);
-      this.listTasks = data;
-    });
+    this._taskService
+      .getTaskByType('listening')
+      .pipe(
+        map((item) =>
+          item.map((value) => ({
+            ...value,
+            date: String(value.date).slice(0, 10),
+          }))
+        )
+      )
+      .subscribe((data) => {
+        this.listTasks = data;
+      });
   }
 
   addListeningTask() {
     const task: ListeningTask = {
       task_id: this.task_id,
       task_type: 'listening',
-      date: this.date,
+      date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
       team: this.team,
       text_source: this.text_source,

@@ -2,7 +2,7 @@ export interface BaseTask {
   task_id: number;
   task_type?: string;
   team: string;
-  date: Date;
+  date: Date | string;
   name_of_item_writer: string;
 }
 
