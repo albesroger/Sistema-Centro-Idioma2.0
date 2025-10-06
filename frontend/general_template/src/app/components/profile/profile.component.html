@@ -1,0 +1,180 @@
+<main class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Contenedor principal -->
+
+  <div class="max-w-3xl mx-auto">
+    <!-- Mostrar solo cuando no esté cargando y no haya error -->
+
+    @if (!loading && !error && user) {
+
+    <!-- Tarjeta de perfil -->
+    <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
+      <!-- Encabezado con fondo degradado -->
+      <div
+        class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 sm:p-8 text-white"
+      >
+        <div class="flex flex-col sm:flex-row items-center gap-6">
+          <!-- Avatar -->
+          <div
+            class="h-24 w-24 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl font-bold text-white"
+          >
+            @if (user.name || user.email) {
+            <span>{{
+              user.name?.charAt(0) || user.email.charAt(0) || "U" | uppercase
+            }}</span>
+            } @else {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-12 w-12"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+            }
+          </div>
+
+          <!-- Información principal -->
+          <div class="text-center sm:text-left">
+            <h1 class="text-2xl sm:text-3xl font-bold">
+              {{ user.name || "Usuario" }} {{ user.lastname || "" }}
+            </h1>
+            <div
+              class="mt-1 flex items-center justify-center sm:justify-start gap-2"
+            >
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm"
+              >
+                {{ user.rol ? (user.rol | titlecase) : "Usuario" }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido principal -->
+      <div class="p-6 sm:p-8">
+        <!-- Sección de información personal -->
+        <div class="mb-8">
+          <h2
+            class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-100"
+          >
+            Información Personal
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @if (user.email) {
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-sm font-medium text-gray-500">
+                Correo Electrónico
+              </div>
+              <div class="mt-1 text-gray-900">{{ user.email }}</div>
+            </div>
+            } @if (user.credencial) {
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-sm font-medium text-gray-500">Credencial</div>
+              <div class="mt-1 text-gray-900">{{ user.credencial }}</div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Acciones -->
+        <div
+          class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100"
+        >
+          <button
+            (click)="loadUser()"
+            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            Actualizar
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Estado de carga -->
+    @if (loading) {
+    <div class="text-center py-12">
+      <div
+        class="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600"
+      >
+        <svg
+          class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        Cargando información del perfil...
+      </div>
+    </div>
+    }
+
+    <!-- Mensaje de error -->
+    @if (error && !loading) {
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg
+            class="h-5 w-5 text-red-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm text-red-700">{{ error }}</p>
+          <div class="mt-2">
+            <button
+              (click)="loadUser()"
+              class="text-sm font-medium text-red-700 hover:text-red-600 focus:outline-none focus:underline"
+            >
+              Reintentar <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</main>
