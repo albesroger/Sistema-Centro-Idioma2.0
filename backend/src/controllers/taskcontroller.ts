@@ -98,6 +98,27 @@ export default {
     }
   },
 
+  async getTaskByType(req: Request, res: Response) {
+    try {
+      const { type } = req.params;
+      const task = await Task.findAll({
+        where: { task_type: type },
+        include: [
+          { model: SpeakingTask, as: "speaking" },
+          { model: ListeningTask, as: "listening" },
+          { model: ReadingTask, as: "reading" },
+          { model: WritingTask, as: "writing" },
+        ],
+      });
+
+      if (!task) return res.status(404).json({ error: "Tareas no encontrada" });
+      return res.json(task);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Error obteniendo las tareas" });
+    }
+  },
+
   // Actualizar una tarea + subtipo
   async updateTask(req: Request, res: Response) {
     try {

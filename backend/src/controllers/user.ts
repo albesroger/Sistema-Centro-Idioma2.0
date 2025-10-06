@@ -5,15 +5,15 @@ import { Op } from "sequelize";
 import jwt from "jsonwebtoken";
 
 export const register = async (req: Request, res: Response) => {
-  const { name, lastname, email, password, credencial } = req.body;
+  const { name, lastname, email, password,  } = req.body;
 
   const user = await User.findOne({
-    where: { [Op.or]: { email: email, credencial: credencial } },
+    where: { [Op.or]: { email: email} },
   });
 
   if (user) {
     return res.status(400).json({
-      msg: `Usuario ya existe con email: ${email} o crecencial ${credencial}`,
+      msg: `Usuario ya existe con email: ${email} o crecencial`,
     });
   }
 
