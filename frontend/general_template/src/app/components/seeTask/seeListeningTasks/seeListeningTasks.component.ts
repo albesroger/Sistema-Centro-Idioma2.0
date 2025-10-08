@@ -5,10 +5,11 @@ import { ToastrService } from 'ngx-toastr';
 import { error } from 'node:console';
 import { request } from 'node:http';
 import { map } from 'rxjs';
+import { ChangeTaskTypeComponent } from "../changeTaskType/changeTaskType.component";
 
 @Component({
   selector: 'app-see-listeningtasks',
-  imports: [],
+  imports: [ChangeTaskTypeComponent],
   templateUrl: './seeListeningTasks.component.html',
 })
 export class SeeTasksComponent implements OnInit {

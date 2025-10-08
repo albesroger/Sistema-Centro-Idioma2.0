@@ -1,35 +1,8 @@
 <div class="min-h-screen bg-gray-50 dark:bg-gray-800 w-full">
   <app-navbar></app-navbar>
-  <main
-    class=" mx-auto px-2 sm:px-4 py-4 sm:py-6 space-y-6 sm:space-y-8"
-  >
-    <div class="flex justify-between gap-30">
-      <div
-        class="flex px-5 gap-5 bg-gray-600 text-xl justify-around dark:text-white dark:bg-gray-700 border-1 border-slate-500 rounded-xl h-10"
-      >
-        <button
-          class="hover:text-cyan-400"
-          (click)="changeTaskType('listening')"
-        >
-          Listening Tasks
-        </button>
-        <button class="hover:text-cyan-400" (click)="changeTaskType('reading')">
-          Reading Tasks
-        </button>
-        <button
-          class="hover:text-cyan-400"
-          (click)="changeTaskType('speaking')"
-        >
-          Speaking Tasks
-        </button>
-        <button class="hover:text-cyan-400" (click)="changeTaskType('writing')">
-          Writing Tasks
-        </button>
-      </div>
-
-      <div>
-        <app-dropdown></app-dropdown>
-      </div>
+  <main class="mx-auto px-2 sm:px-4 py-4 sm:py-6 space-y-6 sm:space-y-8">
+    <div class="flex justify-end m-6 mt-1">
+      <app-dropdown></app-dropdown>
     </div>
 
     <app-see-listeningtasks class="block w-full"></app-see-listeningtasks>
