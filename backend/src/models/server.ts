@@ -5,10 +5,6 @@ import { User } from "../models/user.js";
 import cors from "cors";
 import RTask from "../routes/task.js";
 import { Task } from "../models/task.js";
-import { ListeningTask } from "./listeningTask.js";
-import { ReadingTask } from "./readingTask.js";
-import { WritingTask } from "./writingTask.js";
-import { SpeakingTask } from "./speakingTask.js";
 
 class Server {
   private app: Application;
@@ -42,10 +38,6 @@ class Server {
     try {
       await User.sync({});
       await Task.sync({});
-      await ListeningTask.sync({});
-      await ReadingTask.sync({});
-      await WritingTask.sync({});
-      await SpeakingTask.sync({});
       console.log("Base de datos sincronizada");
       console.log("Conexion exitosa");
     } catch (error) {
