@@ -119,7 +119,7 @@ export default {
     }
   },
 
-  // Actualizar una tarea + subtipo
+
   async updateTask(req: Request, res: Response) {
     try {
       const { id } = req.params;

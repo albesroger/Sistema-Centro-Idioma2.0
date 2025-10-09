@@ -2,7 +2,7 @@
   class="container mx-auto px-2 sm:px-4 py-4 sm:py-8 flex justify-center dark:bg-gray-800"
 >
   <div
-    class="w-full flex-1 flex flex-col border border-gray-300 rounded-xl p-2 sm:p-4 dark:border-gray-600 dark:bg-gray-700 shadow-lg max-w-6xl mx-2 sm:mx-4"
+    class="w-full flex-1 flex flex-col border border-gray-300 rounded-xl p-2 sm:p-4 dark:border-gray-600 dark:bg-gray-700 shadow-lg mx-2 sm:mx-4"
   >
     <h2
       class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2 sm:px-0"
@@ -43,12 +43,7 @@
             >
               Correo
             </th>
-            <th
-              scope="col"
-              class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
-            >
-              Credencial
-            </th>
+
             <th
               scope="col"
               class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
@@ -96,13 +91,7 @@
                 {{ item.email }}
               </div>
             </td>
-            <td class="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-              <div
-                class="text-sm text-gray-700 dark:text-gray-200 truncate max-w-[150px] sm:max-w-none"
-              >
-                {{ item.credencial }}
-              </div>
-            </td>
+
             <td class="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
               <div
                 class="text-sm text-gray-700 dark:text-gray-200 truncate max-w-[150px] sm:max-w-none"
@@ -111,20 +100,42 @@
               </div>
             </td>
             <td
-              class="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-medium"
+              class="flex px-1 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-medium"
             >
               <button
                 type="button"
-                class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 mr-2 sm:mr-4 transition-colors duration-200 text-sm sm:text-base"
+                class="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 mr-2 sm:mr-4 transition-colors duration-200 text-sm sm:text-base"
                 (click)="updateUser(item)"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 1025 1023"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M896.428 1023h-768q-53 0-90.5-37.5T.428 895V127q0-53 37.5-90t90.5-37h576l-128 127h-384q-27 0-45.5 19t-18.5 45v640q0 27 19 45.5t45 18.5h640q27 0 45.5-18.5t18.5-45.5V447l128-128v576q0 53-37.5 90.5t-90.5 37.5zm-576-464l144 144l-208 64zm208 96l-160-159l479-480q17-16 40.5-16t40.5 16l79 80q16 16 16.5 39.5t-16.5 40.5z"
+                  />
+                </svg>
                 Editar
               </button>
               <button
                 type="button"
-                class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200 text-sm sm:text-base"
+                class="flex items-center gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200 text-sm sm:text-base"
                 (click)="deleteUser(item.id)"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill="currentColor"
+                    d="m9.129 0l1.974.005c.778.094 1.46.46 2.022 1.078c.459.504.7 1.09.714 1.728h5.475a.69.69 0 0 1 .686.693a.689.689 0 0 1-.686.692l-1.836-.001v11.627c0 2.543-.949 4.178-3.041 4.178H5.419c-2.092 0-3.026-1.626-3.026-4.178V4.195H.686A.689.689 0 0 1 0 3.505c0-.383.307-.692.686-.692h5.47c.014-.514.205-1.035.554-1.55C7.23.495 8.042.074 9.129 0Zm6.977 4.195H3.764v11.627c0 1.888.52 2.794 1.655 2.794h9.018c1.139 0 1.67-.914 1.67-2.794l-.001-11.627ZM6.716 6.34c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.726 0c.38 0 .686.31.686.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.728 0c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.685.692a.689.689 0 0 1-.686-.692v-8.05a.69.69 0 0 1 .686-.692ZM9.176 1.382c-.642.045-1.065.264-1.334.662c-.198.291-.297.543-.313.768l4.938-.001c-.014-.291-.129-.547-.352-.792c-.346-.38-.73-.586-1.093-.635l-1.846-.002Z"
+                  />
+                </svg>
                 Eliminar
               </button>
             </td>
@@ -132,6 +143,173 @@
           }
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div
+    class="w-full flex-1 flex flex-col border border-gray-300 rounded-xl p-2 sm:p-4 dark:border-gray-600 dark:bg-gray-700 shadow-lg mx-2 sm:mx-4"
+  >
+    <h2
+      class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2 sm:px-0"
+    >
+      Crear Usuario
+    </h2>
+
+    <div
+      class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden border border-gray-200 dark:border-gray-600 p-4"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label
+            for="name"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Nombre</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              [(ngModel)]="name"
+              type="text"
+              id="name"
+              class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white"
+              placeholder="Nombre"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label
+            for="lastname"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Apellido</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              [(ngModel)]="lastname"
+              type="text"
+              id="lastname"
+              class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white"
+              placeholder="Apellido"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label
+            for="email"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Correo Electrónico</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                />
+                <path
+                  d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                />
+              </svg>
+            </div>
+            <input
+              [(ngModel)]="email"
+              type="email"
+              id="email"
+              class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white"
+              placeholder="correo@ejemplo.com"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label
+            for="role"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Rol</label
+          >
+          <div class="relative">
+            <select
+              id="role"
+              class="block w-full pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white"
+            >
+              <option value="" disabled selected>Selecciona un rol</option>
+              <option value="admin">Administrador</option>
+              <option value="profesor">Profesor</option>
+              <option value="lider">Líder de Proyecto</option>
+              <option value="calidad">Asegurador de Calidad</option>
+            </select>
+            <div
+              class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end space-x-3">
+        <button
+          type="button"
+          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          (click)="clearForm()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          (click)="addUser()"
+        >
+          Guardar Usuario
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -15,7 +15,7 @@ import { ErrorsService } from '../../services/errors.service';
   imports: [CommonModule, RouterLink, FormsModule, SpinnerComponent],
   templateUrl: './singIn.component.html',
 })
-export class SingInComponent implements OnInit {
+export class SingInComponent {
   id: number = 0;
   name: string = '';
   lastname: string = '';
@@ -33,8 +33,6 @@ export class SingInComponent implements OnInit {
     private router: Router,
     private _errorsService: ErrorsService
   ) {}
-
-  ngOnInit(): void {}
 
   addUser() {
     if (

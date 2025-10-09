@@ -5,10 +5,10 @@ import { Op } from "sequelize";
 import jwt from "jsonwebtoken";
 
 export const register = async (req: Request, res: Response) => {
-  const { name, lastname, email, password,  } = req.body;
+  const { name, lastname, email, password } = req.body;
 
   const user = await User.findOne({
-    where: { [Op.or]: { email: email} },
+    where: { [Op.or]: { email: email } },
   });
 
   if (user) {
@@ -83,24 +83,35 @@ export const getUser = async (_req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { name, lastname, email, rol } = req.body;
+  try {
+    const { id } = req.params;
+    const { name, lastname, email, rol } = req.body;
 
-  User.update(
-    {
-      name: name,
-      lastname: lastname,
-      email: email,
-      rol: rol,
-    },
-    {
-      where: { id: id },
+    const [updated] = await User.update(
+      { name, lastname, email, rol },
+      { where: { id } }
+    );
+
+    if (updated) {
+      const updatedUser = await User.findByPk(id);
+      return res.json({
+        success: true,
+        msg: `Usuario actualizado exitosamente`,
+        data: updatedUser,
+      });
     }
-  );
 
-  res.json({
-    msg: `User ${id} updated successfully`,
-  });
+    return res.status(404).json({
+      success: false,
+      msg: `No se encontró el usuario con id ${id}`,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "Error al actualizar el usuario",
+    });
+  }
 };
 
 export const loadUser = async (req: Request, res: Response) => {
