@@ -23,7 +23,7 @@ export class SingInComponent implements OnInit {
   password: string = '';
   repeatPassword: string = '';
   credencial: string = '';
-  rol: string = 'profesor';
+  rol: string = 'admin';
 
   loading: boolean = false;
 

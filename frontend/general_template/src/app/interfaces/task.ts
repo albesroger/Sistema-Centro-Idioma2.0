@@ -2,8 +2,8 @@ export interface BaseTask {
   task_id: number;
   task_type?: string;
   team: string;
-  date: Date | string;
   name_of_item_writer: string;
+  date: Date | string;
 }
 
 export interface ListeningTask extends BaseTask {
