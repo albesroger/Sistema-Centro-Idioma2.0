@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { Task } from '../../../interfaces/task';
-import { Router } from 'express';
+import { CommonModule, Location } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorsService } from '../../../services/errors.service';
 import { TaskService } from '../../../services/task.service';
+import { ReadingTask } from '../../../interfaces/task';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'add-task-reading',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './addTaskReading.component.html',
 })
 export class AddTaskReadingComponent {
@@ -50,6 +53,8 @@ export class AddTaskReadingComponent {
 
   feedback_text: string = '';
 
+  loading: boolean = false;
+
   constructor(
     private location: Location,
     private toastr: ToastrService,
@@ -69,5 +74,60 @@ export class AddTaskReadingComponent {
       this.toastr.error('Por favor, complete todos los campos', 'Error');
       return;
     }
+
+    const readingTask: ReadingTask = {
+      task_type: 'reading',
+      task_id: this.task_id,
+      team: this.team,
+      name_of_item_writer: this.name_of_item_writer,
+      date: this.date,
+
+      text_source: this.text_source,
+      where_found: this.where_found,
+      authenticity: this.authenticity,
+      text_type: this.text_type,
+      form: this.form,
+      discourse_type: this.discourse_type,
+      main_topic_area: this.main_topic_area,
+      nature_of_content: this.nature_of_content,
+      vocabulary: this.vocabulary,
+      grammar: this.grammar,
+      number_of_words: this.number_of_words,
+      comprehensible_cefr_level: this.comprehensible_cefr_level,
+
+      item_characteristics: this.item_characteristics,
+
+      time_to_do_total_task_minutes: this.time_to_do_total_task_minutes,
+      task_level_estimated: this.task_level_estimated,
+
+      test_task: this.test_task,
+
+      answer_key: this.answer_key,
+
+      comments: this.comments,
+
+      feedback_provided_by: this.feedback_provided_by,
+      feedback_team: this.feedback_team,
+      feedback_date: this.feedback_date,
+
+      feedback_text: this.feedback_text,
+    };
+    this.loading = true;
+
+    this._taskService.addTask(readingTask).subscribe({
+      next: (v) => {
+        this.loading = false;
+        this.toastr.success(
+          `Tarea de ${readingTask.task_type} agregada correctamente`,
+          'Exito'
+        );
+        this.router.navigate(['/seeTask']);
+      },
+      error: (e: HttpErrorResponse) => {
+        this.loading = false;
+        this._errorsService.messageError(e);
+      },
+      complete: () => console.info('complete'),
+    });
   }
 }
