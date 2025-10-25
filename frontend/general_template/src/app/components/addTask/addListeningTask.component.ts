@@ -7,14 +7,14 @@ import { ErrorsService } from '../../services/errors.service';
 import { TaskService } from '../../services/task.service';
 import { ListeningTask } from '../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'add-task',
   imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './addListeningTask.component.html',
 })
-export class AddTaskComponent implements OnInit {
+export class AddListeningTaskComponent implements OnInit {
   task_type: string = 'listening';
   task_id: number = 0;
   team: string = '';
