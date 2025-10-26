@@ -3,11 +3,11 @@ import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ErrorsService } from '../../services/errors.service';
-import { TaskService } from '../../services/task.service';
-import { ListeningTask } from '../../interfaces/task';
+import { ErrorsService } from '../../../services/errors.service';
+import { TaskService } from '../../../services/task.service';
+import { ListeningTask } from '../../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../../navbar/navbar.component';
 
 @Component({
   selector: 'add-task',
