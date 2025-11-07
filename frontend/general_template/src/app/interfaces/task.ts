@@ -81,7 +81,6 @@ export interface WritingTask extends BaseTask {
 
 export interface SpeakingTask extends BaseTask {
   task_type: 'speaking';
-  original_task_name: string;
   main_topic_area: string;
   nature_of_content: string;
   expected_vocabulary: string;

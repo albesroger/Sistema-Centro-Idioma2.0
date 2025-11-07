@@ -1,40 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { ReadingTask } from '../../../interfaces/task';
+import { SpeakingTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'app-see-reading-tasks',
+  selector: 'app-see-speaking-tasks',
   imports: [],
-  templateUrl: './seeReadingTasks.component.html',
+  templateUrl: './seeSpeakingTasks.html',
 })
-export class SeeReadingTasks implements OnInit {
-  listTasks: ReadingTask[] = [];
+export class SeeSpeakingTasks implements OnInit {
+  listTasks: SpeakingTask[] = [];
 
   task_id: number = 0;
-  task_type: string = 'reading';
+  task_type: string = 'speaking';
   team: string = '';
   date: Date | string = '';
-
   name_of_item_writer: string = '';
-  text_source: string = '';
-  where_found: string = '';
-  authenticity: string = '';
-  text_type: string = '';
-  form: string = '';
-  discourse_type: string = '';
+
   main_topic_area: string = '';
   nature_of_content: string = '';
-  vocabulary: string = '';
-  grammar: string = '';
-  number_of_words: number = 0;
-  comprehensible_cefr_level: string = '';
-  item_characteristics: string = '';
+  expected_vocabulary: string = '';
+  prompt_type: string = '';
   time_to_do_total_task_minutes: number = 0;
   task_level_estimated: string = '';
+  expected_outcomes: string = '';
   test_task: string = '';
-  answer_key: string = '';
   comments: string = '';
   feedback_provided_by: string = '';
   feedback_team: string = '';
@@ -47,12 +38,12 @@ export class SeeReadingTasks implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getReadingTasks();
+    this.getSpeakingTasks();
   }
 
-  getReadingTasks() {
+  getSpeakingTasks() {
     this._taskService
-      .getTaskByTypeRe('reading')
+      .getTaskByTypeSp('speaking')
       .pipe(
         map((item) =>
           item.map((value) => ({
@@ -66,30 +57,21 @@ export class SeeReadingTasks implements OnInit {
       });
   }
 
-  addReadingTask() {
-    const task: ReadingTask = {
+  addSpeakingTask() {
+    const task: SpeakingTask = {
       task_id: this.task_id,
-      task_type: 'reading',
+      task_type: 'speaking',
+      team: this.team,
       date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
-      team: this.team,
-      text_source: this.text_source,
-      where_found: this.where_found,
-      authenticity: this.authenticity,
-      text_type: this.text_type,
-      form: this.form,
-      discourse_type: this.discourse_type,
       main_topic_area: this.main_topic_area,
       nature_of_content: this.nature_of_content,
-      vocabulary: (this.vocabulary = ''),
-      grammar: (this.grammar = ''),
-      number_of_words: this.number_of_words,
-      comprehensible_cefr_level: (this.comprehensible_cefr_level = ''),
-      item_characteristics: this.item_characteristics,
+      expected_vocabulary: this.expected_vocabulary,
+      prompt_type: this.prompt_type,
       time_to_do_total_task_minutes: this.time_to_do_total_task_minutes,
       task_level_estimated: this.task_level_estimated,
-      test_task: this.task_level_estimated,
-      answer_key: this.answer_key,
+      expected_outcomes: this.expected_outcomes,
+      test_task: this.test_task,
       comments: this.comments,
       feedback_provided_by: this.feedback_provided_by,
       feedback_team: this.feedback_team,
@@ -100,7 +82,7 @@ export class SeeReadingTasks implements OnInit {
     this._taskService.addTask(task).subscribe({
       next: (response) => {
         this.toastr.success('Task created successfully', 'Success');
-        this.getReadingTasks();
+        this.getSpeakingTasks();
       },
       error: (error) => {
         this.toastr.error('Error creating task', 'Error');
@@ -112,13 +94,13 @@ export class SeeReadingTasks implements OnInit {
   deleteTask(id: number) {
     this._taskService.deleteTask(id).subscribe({
       next: (data) => {
-        this.getReadingTasks();
+        this.getSpeakingTasks();
         this.toastr.success('Task eliminada');
       },
       error: (error) => {
         this.toastr.error('Error al eliminar Task');
       },
     });
-    this.getReadingTasks();
+    this.getSpeakingTasks();
   }
 }
