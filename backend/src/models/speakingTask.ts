@@ -28,6 +28,8 @@ export const SpeakingTask = sequelize.define(
     feedback_team: DataTypes.STRING,
     feedback_date: DataTypes.DATE,
     feedback_text: DataTypes.TEXT,
+    expected_outcomes: DataTypes.TEXT,
+    test_task: DataTypes.TEXT,
   },
   {
     tableName: "speaking_tasks",

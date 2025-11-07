@@ -85,6 +85,8 @@ export interface SpeakingTask extends BaseTask {
   nature_of_content: string;
   expected_vocabulary: string;
   prompt_type: string;
+  targetted_outcomes: string;
+  task_section_task: string;
   time_to_do_total_task_minutes: number;
   task_level_estimated: string;
   expected_outcomes: string;

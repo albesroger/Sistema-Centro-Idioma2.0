@@ -77,6 +77,8 @@ export class SeeSpeakingTasks implements OnInit {
       feedback_team: this.feedback_team,
       feedback_date: this.feedback_date,
       feedback_text: this.feedback_text,
+      targetted_outcomes: '',
+      task_section_task: ''
     };
 
     this._taskService.addTask(task).subscribe({

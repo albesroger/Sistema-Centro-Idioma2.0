@@ -10,6 +10,7 @@ import { InicioPageComponent } from './components/home/inicio_page/inicio_page.c
 import { ProfileComponent } from './components/profile/profile.component';
 import { SeeTaskComponent } from './components/seeTask/seeTask.component';
 import { AddReadingTaskComponent } from './components/addTask/addReadingTask/addReadingTask.component';
+import { AddSpeakingTaskComponent } from './components/addTask/addSpeakingTask/addSpeakingTask.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,11 @@ export const routes: Routes = [
   {
     path: 'addReadingTask',
     component: AddReadingTaskComponent,
+    canActivate: [guardGuard],
+  },
+  {
+    path: 'addSpeakingTask',
+    component: AddSpeakingTaskComponent,
     canActivate: [guardGuard],
   },
   {
