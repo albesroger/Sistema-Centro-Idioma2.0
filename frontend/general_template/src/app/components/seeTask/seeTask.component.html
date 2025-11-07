@@ -5,6 +5,26 @@
       <app-dropdown></app-dropdown>
     </div>
 
-    <app-see-listeningtasks class="block w-full"></app-see-listeningtasks>
+    <div class="w-full px-2 sm:px-4">
+      <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden">
+        <app-change-task-type class="block w-full"></app-change-task-type>
+        
+        <div class="p-4">
+          @switch (taskType()) { 
+            @case ('listening') {
+              <app-see-listeningtasks class="block w-full"></app-see-listeningtasks>
+            } 
+            @case ('reading') {
+              <app-see-reading-tasks class="block w-full"></app-see-reading-tasks>
+            } 
+            @default {
+              <div class="p-4 text-center text-gray-500 dark:text-gray-400">
+                Selecciona un tipo de tarea
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
   </main>
 </div>

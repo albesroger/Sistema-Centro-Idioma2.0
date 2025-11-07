@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { TaskTypeService } from '../../../services/changeTaskType.service';
 
 @Component({
   selector: 'app-change-task-type',
@@ -7,15 +8,16 @@ import { NgClass } from '@angular/common';
   templateUrl: './changeTaskType.component.html',
 })
 export class ChangeTaskTypeComponent {
-  seeTask = signal('listening');
   isActivate = signal(false);
+  taskType = signal<string>('listening');
 
-  constructor() {}
+  constructor(private taskTypeService: TaskTypeService) {}
 
-  changeTaskType(taskType: string) {
-    this.seeTask.set(taskType);
-    console.log(this.seeTask());
+  setTaskType(type: 'listening' | 'reading' | 'speaking' | 'writing') {
+    this.taskType.set(type);
+    this.taskTypeService.setTaskType(type);
   }
+
   changeActivate() {
     this.isActivate.set(!this.isActivate());
   }

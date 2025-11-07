@@ -5,10 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 import { ReadingTask } from '../../../interfaces/task';
 import { ErrorsService } from '../../../services/errors.service';
 import { TaskService } from '../../../services/task.service';
+import { NavbarComponent } from '../../navbar/navbar.component';
+import { CommonModule, Location } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-reading-task',
-  imports: [],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './addReadingTask.component.html',
 })
 export class AddReadingTaskComponent {
@@ -127,5 +130,8 @@ export class AddReadingTaskComponent {
       },
       complete: () => console.info('complete'),
     });
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

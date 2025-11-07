@@ -9,6 +9,7 @@ import { AddListeningTaskComponent } from './components/addTask/addListeningTask
 import { InicioPageComponent } from './components/home/inicio_page/inicio_page.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SeeTaskComponent } from './components/seeTask/seeTask.component';
+import { AddReadingTaskComponent } from './components/addTask/addReadingTask/addReadingTask.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,11 @@ export const routes: Routes = [
     canActivate: [guardGuard],
   },
   {
+    path: 'addReadingTask',
+    component: AddReadingTaskComponent,
+    canActivate: [guardGuard],
+  },
+  {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [guardGuard],
@@ -53,11 +59,11 @@ export const routes: Routes = [
   {
     path: 'homePage',
     component: InicioPageComponent,
-    //canActivate: [guardGuard],
+    canActivate: [guardGuard],
   },
   {
     path: '',
-    redirectTo: 'homePage',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 

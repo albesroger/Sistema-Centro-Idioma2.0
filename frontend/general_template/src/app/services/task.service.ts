@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { ListeningTask, Task } from '../interfaces/task';
+import { ListeningTask, ReadingTask, Task } from '../interfaces/task';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  
   private AppUrl: string;
   private APIUrl: string;
 
@@ -36,8 +35,13 @@ export class TaskService {
     );
   }
 
-  getTaskByType(type: string): Observable<ListeningTask[]> {
+  getTaskByTypeLi(type: string): Observable<ListeningTask[]> {
     return this.http.get<ListeningTask[]>(
+      `${this.AppUrl}${this.APIUrl}/getTaskByType/${type}`
+    );
+  }
+  getTaskByTypeRe(type: string): Observable<ReadingTask[]> {
+    return this.http.get<ReadingTask[]>(
       `${this.AppUrl}${this.APIUrl}/getTaskByType/${type}`
     );
   }

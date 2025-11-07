@@ -98,6 +98,7 @@ export default {
     }
   },
 
+  // Obtener una tarea por type
   async getTaskByType(req: Request, res: Response) {
     try {
       const { type } = req.params;
@@ -118,8 +119,8 @@ export default {
       return res.status(500).json({ error: "Error obteniendo las tareas" });
     }
   },
-
-
+  
+  //actualizar tarea
   async updateTask(req: Request, res: Response) {
     try {
       const { id } = req.params;

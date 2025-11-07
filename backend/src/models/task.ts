@@ -10,9 +10,12 @@ interface TaskAttributes {
   date?: Date;
 }
 
-interface TaskCreationAttributes extends Optional<TaskAttributes, 'task_id'> {}
+interface TaskCreationAttributes extends Optional<TaskAttributes, "task_id"> {}
 
-export class Task extends Model<TaskAttributes, TaskCreationAttributes> implements TaskAttributes {
+export class Task
+  extends Model<TaskAttributes, TaskCreationAttributes>
+  implements TaskAttributes
+{
   public task_id!: string;
   public task_type!: string;
   public name_of_item_writer?: string;
@@ -24,26 +27,26 @@ Task.init(
   {
     task_id: {
       type: DataTypes.STRING,
-      primaryKey: true
+      primaryKey: true,
     },
     task_type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     name_of_item_writer: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     team: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     date: {
-      type: DataTypes.DATE
-    }
+      type: DataTypes.DATE,
+    },
   },
   {
     sequelize,
     tableName: "tasks",
-    timestamps: false
+    timestamps: false,
   }
 );
 

@@ -1,5 +1,5 @@
-import { Component, OnInit, Signal } from '@angular/core';
-import { ListeningTask, Task } from '../../../interfaces/task';
+import { Component, OnInit } from '@angular/core';
+import { ReadingTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { error } from 'node:console';
@@ -7,33 +7,30 @@ import { request } from 'node:http';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'app-see-listeningtasks',
+  selector: 'app-see-reading-tasks',
   imports: [],
-  templateUrl: './seeListeningTasks.component.html',
+  templateUrl: './seeReadingTasks.component.html',
 })
-export class SeeTasksComponent implements OnInit {
-  listTasks: ListeningTask[] = [];
+export class SeeReadingTasks implements OnInit {
+  listTasks: ReadingTask[] = [];
 
   task_id: number = 0;
-  task_type: string = 'listening';
+  task_type: string = 'reading';
   team: string = '';
-  date: Date = new Date();
-
+  date: Date | string = '';
+  
   name_of_item_writer: string = '';
   text_source: string = '';
   where_found: string = '';
   authenticity: string = '';
-  text_input_type: string = '';
+  text_type: string = '';
+  form: string = '';
   discourse_type: string = '';
   main_topic_area: string = '';
   nature_of_content: string = '';
   vocabulary: string = '';
   grammar: string = '';
-  length_of_input: string = '';
-  number_of_participants: number = 0;
-  accents: string = '';
-  speed_of_delivery: string = '';
-  clarity_of_articulation: string = '';
+  number_of_words: number = 0;
   comprehensible_cefr_level: string = '';
   item_characteristics: string = '';
   time_to_do_total_task_minutes: number = 0;
@@ -52,12 +49,12 @@ export class SeeTasksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getListeningTasks();
+    this.getReadingTasks();
   }
 
-  getListeningTasks() {
+  getReadingTasks() {
     this._taskService
-      .getTaskByTypeLi('listening')
+      .getTaskByTypeRe('reading')
       .pipe(
         map((item) =>
           item.map((value) => ({
@@ -71,27 +68,24 @@ export class SeeTasksComponent implements OnInit {
       });
   }
 
-  addListeningTask() {
-    const task: ListeningTask = {
+  addReadingTask() {
+    const task: ReadingTask = {
       task_id: this.task_id,
-      task_type: 'listening',
+      task_type: 'reading',
       date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
       team: this.team,
       text_source: this.text_source,
       where_found: this.where_found,
       authenticity: this.authenticity,
-      text_input_type: this.text_input_type,
+      text_type: this.text_type,
+      form: this.form,
       discourse_type: this.discourse_type,
       main_topic_area: this.main_topic_area,
       nature_of_content: this.nature_of_content,
       vocabulary: (this.vocabulary = ''),
       grammar: (this.grammar = ''),
-      length_of_input: this.length_of_input,
-      number_of_participants: this.number_of_participants,
-      accents: (this.accents = ''),
-      speed_of_delivery: this.speed_of_delivery,
-      clarity_of_articulation: this.clarity_of_articulation,
+      number_of_words: this.number_of_words,
       comprehensible_cefr_level: (this.comprehensible_cefr_level = ''),
       item_characteristics: this.item_characteristics,
       time_to_do_total_task_minutes: this.time_to_do_total_task_minutes,
@@ -106,14 +100,13 @@ export class SeeTasksComponent implements OnInit {
     };
 
     this._taskService.addTask(task).subscribe({
-      next: (data) => {
-        // Actualizar la lista completa después de agregar
-        this.getListeningTasks();
-        this.toastr.success('Tarea agregada', 'Éxito');
-        //this.clearForm();
+      next: (response) => {
+        this.toastr.success('Task created successfully', 'Success');
+        this.getReadingTasks();
       },
       error: (error) => {
-        this.toastr.error('Error al agregar la tarea', 'Error');
+        this.toastr.error('Error creating task', 'Error');
+        console.error('Error creating task:', error);
       },
     });
   }
@@ -121,13 +114,13 @@ export class SeeTasksComponent implements OnInit {
   deleteTask(id: number) {
     this._taskService.deleteTask(id).subscribe({
       next: (data) => {
-        this.getListeningTasks();
+        this.getReadingTasks();
         this.toastr.success('Task eliminada');
       },
       error: (error) => {
         this.toastr.error('Error al eliminar Task');
       },
     });
-    this.getListeningTasks();
+    this.getReadingTasks();
   }
 }

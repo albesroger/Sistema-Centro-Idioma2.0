@@ -15,7 +15,7 @@ router.post("/api/user/register", register);
 router.post("/api/user/login", login);
 router.get("/api/user/loadUser", validaterToken, loadUser);
 router.get("/api/user/getUser", validaterToken, getUser);
-router.delete("/api/user/deleteUser/:id", validaterToken, deleteUser);
 router.put("/api/user/updateUser", validaterToken, updateUser);
+router.delete("/api/user/deleteUser/:id", validaterToken, deleteUser);
 
 export default router;
