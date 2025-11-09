@@ -4,7 +4,7 @@
   >
     <li class="me-2">
       <button
-        [ngClass]="isActivate() ? 'bg-blue-500' : 'bg-transparent'"
+        [ngClass]="{ 'bg-blue-500': taskType() === 'listening' }"
         class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:border-gray-300 dark:hover:text-gray-100 group"
         (click)="setTaskType('listening')"
       >
@@ -23,7 +23,7 @@
     </li>
     <li class="me-2">
       <button
-        [ngClass]="isActivate() ? 'bg-blue-500' : 'bg-transparent'"
+        [ngClass]="{ 'bg-blue-500': taskType() === 'reading' }"
         class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:border-gray-300 dark:hover:text-gray-100 group"
         (click)="setTaskType('reading')"
       >
@@ -41,7 +41,7 @@
     </li>
     <li class="me-2">
       <button
-        [ngClass]="isActivate() ? 'bg-blue-500' : 'bg-transparent'"
+        [ngClass]="{ 'bg-blue-500': taskType() === 'speaking' }"
         class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:border-gray-300 dark:hover:text-gray-100 group"
         (click)="setTaskType('speaking')"
       >
@@ -60,7 +60,7 @@
     </li>
     <li class="me-2">
       <button
-        [ngClass]="isActivate() ? 'bg-blue-500' : 'bg-transparent'"
+        [ngClass]="{ 'bg-blue-500': taskType() === 'writing' }"
         class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:border-gray-300 dark:hover:text-gray-100 group"
         (click)="setTaskType('writing')"
       >
