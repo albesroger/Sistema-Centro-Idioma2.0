@@ -36,12 +36,33 @@ class Server {
 
   async DBconnect() {
     try {
-      await User.sync({});
-      await Task.sync({});
-      console.log("Base de datos sincronizada");
-      console.log("Conexion exitosa");
+      console.log("🔌 Conectando a la base de datos...");
+
+      // Importar todos los modelos primero
+      const models = await import("./index.js");
+      console.log("✅ Modelos importados correctamente");
+
+      // Sincronizar modelos base
+      console.log("🔄 Sincronizando modelos base...");
+      await Promise.all([
+        User.sync({ alter: true }),
+        Task.sync({ alter: true }),
+      ]);
+
+      // Sincronizar modelos de tareas
+      console.log("🔄 Sincronizando modelos de tareas...");
+      await Promise.all([
+        models.SpeakingTask.sync({ alter: true }),
+        models.ListeningTask.sync({ alter: true }),
+        models.ReadingTask.sync({ alter: true }),
+        models.WritingTask.sync({ alter: true }),
+      ]);
+
+      console.log("✅ Base de datos sincronizada correctamente");
+      console.log("🚀 Conexión exitosa a la base de datos");
     } catch (error) {
-      console.log("Error de conexion");
+      console.error("❌ Error al conectar con la base de datos:", error);
+      throw error; // Propagar el error para que se muestre en la consola
     }
   }
 }

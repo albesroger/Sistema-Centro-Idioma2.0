@@ -11,36 +11,36 @@ const setupAssociations = () => {
     foreignKey: "task_id",
     as: "speaking",
   });
-  SpeakingTask.belongsTo(Task, { 
+  SpeakingTask.belongsTo(Task, {
     foreignKey: "task_id",
-    as: "task"
+    as: "task",
   });
 
   Task.hasOne(ListeningTask, {
     foreignKey: "task_id",
     as: "listening",
   });
-  ListeningTask.belongsTo(Task, { 
+  ListeningTask.belongsTo(Task, {
     foreignKey: "task_id",
-    as: "task"
+    as: "task",
   });
 
   Task.hasOne(ReadingTask, {
     foreignKey: "task_id",
     as: "reading",
   });
-  ReadingTask.belongsTo(Task, { 
+  ReadingTask.belongsTo(Task, {
     foreignKey: "task_id",
-    as: "task"
+    as: "task",
   });
 
   Task.hasOne(WritingTask, {
     foreignKey: "task_id",
     as: "writing",
   });
-  WritingTask.belongsTo(Task, { 
+  WritingTask.belongsTo(Task, {
     foreignKey: "task_id",
-    as: "task"
+    as: "task",
   });
 
   console.log("All associations have been set up successfully.");
@@ -53,5 +53,5 @@ export {
   ListeningTask,
   ReadingTask,
   WritingTask,
-  setupAssociations
+  setupAssociations,
 };

@@ -8,8 +8,23 @@ import {
   setupAssociations,
 } from "../models/index.js";
 
-// Initialize associations
+// Initialize associat
+
 setupAssociations();
+
+const model = {
+  listening: ListeningTask,
+  reading: ReadingTask,
+  speaking: SpeakingTask,
+  writing: WritingTask,
+};
+
+type TaskType = keyof typeof model;
+
+const getModelTask = (type: string) => {
+  const normalizedType = type.toLowerCase().trim();
+  return model[normalizedType as TaskType];
+};
 
 export default {
   // Crear una tarea con su subtipo
@@ -98,28 +113,96 @@ export default {
     }
   },
 
-  // Obtener una tarea por type
+  // Obtener tareas por tipo
   async getTaskByType(req: Request, res: Response) {
+    const { type } = req.params;
+    console.log(`🔍 Buscando tareas de tipo: ${type}`);
+
     try {
-      const { type } = req.params;
-      const task = await Task.findAll({
-        where: { task_type: type },
+      // Validar que el tipo sea uno de los permitidos
+      const validTypes = ["listening", "speaking", "reading", "writing"];
+      const normalizedType = type.toLowerCase().trim();
+
+      if (!validTypes.includes(normalizedType)) {
+        console.error(`❌ Tipo de tarea no válido: ${type}`);
+        return res.status(400).json({
+          error: "Tipo de tarea no válido",
+          message: `Los tipos válidos son: ${validTypes.join(", ")}`,
+          receivedType: type,
+        });
+      }
+
+      // Verificar si el modelo Task está disponible
+      if (!Task) {
+        console.error("❌ Error: El modelo Task no está disponible");
+        return res.status(500).json({
+          error: "Error interno del servidor",
+          message: "Error al cargar los modelos de la base de datos",
+        });
+      }
+
+      // Obtener el modelo correspondiente
+      const taskModel = getModelTask(normalizedType as TaskType);
+      if (!taskModel) {
+        console.error(
+          `❌ No se pudo encontrar el modelo para: ${normalizedType}`
+        );
+        return res.status(500).json({
+          error: "Error interno del servidor",
+          message: `No se pudo cargar el modelo para el tipo: ${normalizedType}`,
+        });
+      }
+
+      // Verificar la conexión a la base de datos
+      try {
+        await Task.sequelize?.authenticate();
+        console.log("✅ Conexión a la base de datos establecida correctamente");
+      } catch (dbError) {
+        console.error("❌ Error al conectar con la base de datos:", dbError);
+        return res.status(500).json({
+          error: "Error de conexión a la base de datos",
+          message: "No se pudo establecer conexión con la base de datos",
+        });
+      }
+
+      // Obtener las tareas
+      console.log(`🔎 Buscando tareas en la base de datos...`);
+      const tasks = await Task.findAll({
+        where: { task_type: normalizedType },
         include: [
-          { model: SpeakingTask, as: "speaking" },
-          { model: ListeningTask, as: "listening" },
-          { model: ReadingTask, as: "reading" },
-          { model: WritingTask, as: "writing" },
+          {
+            model: taskModel,
+            as: normalizedType,
+            required: false,
+          },
         ],
       });
 
-      if (!task) return res.status(404).json({ error: "Tareas no encontrada" });
-      return res.json(task);
+      console.log(
+        `✅ Se encontraron ${tasks.length} tareas de tipo ${normalizedType}`
+      );
+      return res.json(tasks);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Error obteniendo las tareas" });
+      const errorMessage =
+        error instanceof Error ? error.message : "Error desconocido";
+      const errorStack = error instanceof Error ? error.stack : undefined;
+
+      console.error("❌ Error en getTaskByType:", {
+        error: errorMessage,
+        stack: errorStack,
+        type,
+        timestamp: new Date().toISOString(),
+      });
+
+      return res.status(500).json({
+        error: "Error al obtener las tareas",
+        message: errorMessage,
+        requestId: Date.now(),
+        ...(process.env.NODE_ENV === "development" && { stack: errorStack }),
+      });
     }
   },
-  
+
   //actualizar tarea
   async updateTask(req: Request, res: Response) {
     try {

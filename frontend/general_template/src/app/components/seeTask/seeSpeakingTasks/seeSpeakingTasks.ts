@@ -22,6 +22,8 @@ export class SeeSpeakingTasks implements OnInit {
   nature_of_content: string = '';
   expected_vocabulary: string = '';
   prompt_type: string = '';
+  targetted_outcomes: string = '';
+  task_section_task: string = '';
   time_to_do_total_task_minutes: number = 0;
   task_level_estimated: string = '';
   expected_outcomes: string = '';
@@ -77,8 +79,8 @@ export class SeeSpeakingTasks implements OnInit {
       feedback_team: this.feedback_team,
       feedback_date: this.feedback_date,
       feedback_text: this.feedback_text,
-      targetted_outcomes: '',
-      task_section_task: ''
+      targetted_outcomes: this.targetted_outcomes,
+      task_section_task: this.task_section_task,
     };
 
     this._taskService.addTask(task).subscribe({
