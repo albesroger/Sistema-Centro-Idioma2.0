@@ -23,6 +23,7 @@
     "@angular/ssr": "^19.2.15",
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindplus/elements": "^1.0.9",
+    "chart.js": "^4.5.1",
     "express": "^4.18.2",
     "gsap": "^3.13.0",
     "ngx-toastr": "^19.0.0",

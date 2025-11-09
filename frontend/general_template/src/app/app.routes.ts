@@ -12,6 +12,8 @@ import { AddListeningTaskComponent } from './components/addTask/addListeningTask
 import { AddReadingTaskComponent } from './components/addTask/addReadingTask/addReadingTask.component';
 import { AddSpeakingTaskComponent } from './components/addTask/addSpeakingTask/addSpeakingTask.component';
 import { AddWritingTaskComponent } from './components/addTask/addWritingTask/addWritingTask';
+import { HomeComponent } from './components/dashboard/home/home.component';
+import { CurrentUsersComponent } from './components/dashboard/currentUsers/currentUsers.component';
 
 export const routes: Routes = [
   {
@@ -24,11 +26,13 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    data: {
-      roles: ['admin'],
-    },
     component: DashboardComponent,
-    canActivate: [guardGuard],
+    children: [
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+      { path: 'inicio', component: HomeComponent },
+      { path: 'users', component: CurrentUsersComponent },
+      // Agrega más rutas según sea necesario
+    ]
   },
   {
     path: 'addListeningTask',
