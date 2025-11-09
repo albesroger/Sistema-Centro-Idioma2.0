@@ -5,12 +5,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { guardGuard } from './utils/guard.guard';
-import { AddListeningTaskComponent } from './components/addTask/addListeningTask/addListeningTask.component';
 import { InicioPageComponent } from './components/home/inicio_page/inicio_page.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SeeTaskComponent } from './components/seeTask/seeTask.component';
+import { AddListeningTaskComponent } from './components/addTask/addListeningTask/addListeningTask.component';
 import { AddReadingTaskComponent } from './components/addTask/addReadingTask/addReadingTask.component';
 import { AddSpeakingTaskComponent } from './components/addTask/addSpeakingTask/addSpeakingTask.component';
+import { AddWritingTaskComponent } from './components/addTask/addWritingTask/addWritingTask';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,11 @@ export const routes: Routes = [
   {
     path: 'addSpeakingTask',
     component: AddSpeakingTaskComponent,
+    canActivate: [guardGuard],
+  },
+  {
+    path: 'addWritingTask',
+    component: AddWritingTaskComponent,
     canActivate: [guardGuard],
   },
   {
