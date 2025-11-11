@@ -4,44 +4,46 @@
 >
   <div class="flex flex-wrap items-center justify-between mx-auto px-3 h-full">
     <!--Menu Hamburguesa-->
-    <button
-      class="lg:hidden text-gray-700 dark:text-gray-200 focus:outline-none"
-      (click)="toggleSidebar()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-7 w-7"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <div class="flex gap-3">
+      <button
+        class="lg:hidden text-gray-700 dark:text-gray-200 focus:outline-none"
+        (click)="toggleSidebar()"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"
-        />
-      </svg>
-    </button>
-    <a
-      href="#"
-      class="flex items-center space-x-3 rtl:space-x-reverse group"
-      routerLink="/homePage"
-    >
-      <div
-        class="p-1 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg group-hover:scale-105 transition-transform duration-200"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-7 w-7"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+      <a
+        href="#"
+        class="flex items-center space-x-3 rtl:space-x-reverse group"
+        routerLink="/homePage"
       >
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          class="h-5"
-          alt="Flowbite Logo"
-        />
-      </div>
-      <span
-        class="self-center text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-300"
-        >CENID</span
-      >
-    </a>
+        <div
+          class="p-1 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg group-hover:scale-105 transition-transform duration-200"
+        >
+          <img
+            src="https://flowbite.com/docs/images/logo.svg"
+            class="h-5"
+            alt="Flowbite Logo"
+          />
+        </div>
+        <span
+          class="self-center text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-300"
+          >CENID</span
+        >
+      </a>
+    </div>
 
     <div>
       <!-- muñeco-->
