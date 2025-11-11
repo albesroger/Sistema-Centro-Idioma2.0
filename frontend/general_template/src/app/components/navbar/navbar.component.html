@@ -1,8 +1,28 @@
 <nav
   #desplegable
-  class="w-full h-13 bg-white/80 border-b border-gray-200/60 dark:bg-slate-900 dark:border-slate-900/40 shadow-sm z-30"
+  class="w-full h-13 bg-white/80 border-b border-gray-200/60 dark:bg-slate-900 dark:border-slate-900/40 shadow-sm z-30 transition-colors duration-300"
 >
   <div class="flex flex-wrap items-center justify-between mx-auto px-3 h-full">
+    <!--Menu Hamburguesa-->
+    <button
+      class="lg:hidden text-gray-700 dark:text-gray-200 focus:outline-none"
+      (click)="toggleSidebar()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-7 w-7"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
     <a
       href="#"
       class="flex items-center space-x-3 rtl:space-x-reverse group"
@@ -154,8 +174,11 @@
         </div>
         }
       </button>
+
       <!--theme-->
+      <!-- theme -->
       <button
+        (click)="toggleTheme()"
         class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         aria-label="Toggle theme"
       >
@@ -163,26 +186,45 @@
           <div
             class="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           ></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="relative h-6 w-6 text-gray-600 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white transition-colors duration-200"
-          >
-            <path d="M12 2v2" />
-            <path
-              d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"
-            />
-            <path d="M16 12a4 4 0 0 0-4-4" />
-            <path d="m19 5-1.256 1.256" />
-            <path d="M20 12h2" />
-          </svg>
+
+          <ng-container *ngIf="!isDarkMode; else darkIcon">
+            <!-- ☀️ Icono modo claro -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="relative h-6 w-6 text-gray-600 group-hover:text-white transition-colors duration-200"
+            >
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l1.41-1.41M15.66 6.34l1.41-1.41"
+              />
+              <circle cx="12" cy="12" r="5" />
+            </svg>
+          </ng-container>
+
+          <ng-template #darkIcon>
+            <!-- 🌙 Icono modo oscuro -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="relative h-6 w-6 text-gray-300 group-hover:text-white transition-colors duration-200"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
+            </svg>
+          </ng-template>
         </div>
       </button>
     </div>

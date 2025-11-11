@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { SidebarService } from '../../../services/sidebar.service';
 
 interface MenuItem {
   label: string;
@@ -15,15 +16,26 @@ interface MenuItem {
   imports: [CommonModule, RouterModule],
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   menuItems: MenuItem[] = [
     { label: 'Inicio', icon: 'home', route: '/dashboard/inicio' },
     { label: 'Usuarios', icon: 'people', route: '/dashboard/users' },
     { label: 'Cursos', icon: 'school', route: '/dashboard/courses' },
     { label: 'Configuración', icon: 'settings', route: '/dashboard/settings' },
   ];
+  isVisible = true;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sidebarService: SidebarService) {}
+
+  ngOnInit() {
+    this.sidebarService.sidebarVisible$.subscribe(
+      (visible) => (this.isVisible = visible)
+    );
+  }
+
+  closeSidebar() {
+    this.sidebarService.hideSidebar();
+  }
 
   navigate(route: string): void {
     this.router.navigate([route]);
@@ -31,5 +43,14 @@ export class SidebarComponent {
 
   isActive(route: string): boolean {
     return this.router.url.startsWith(route);
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const width = (event.target as Window).innerWidth;
+    if (width < 1024) {
+      this.sidebarService.hideSidebar();
+    } else {
+      this.sidebarService.showSidebar();
+    }
   }
 }

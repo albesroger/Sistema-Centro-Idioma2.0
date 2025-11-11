@@ -7,16 +7,19 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { NgStyle } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 import { gsap } from 'gsap';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, NgStyle],
+  imports: [RouterLink, NgStyle, CommonModule],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sidebarService: SidebarService) {
+    this.loadTheme();
+  }
 
   mytoken = localStorage.getItem('myToken');
 
@@ -24,6 +27,7 @@ export class NavbarComponent {
   divEl = viewChild<ElementRef>('divEl');
   desplegable = viewChild<ElementRef<HTMLElement>>('desplegable');
   @ViewChild('userButton') userButton!: ElementRef;
+  isDarkMode = false;
 
   toggleArrow() {
     this.isOpen.update((isOpen) => !isOpen);
@@ -65,19 +69,49 @@ export class NavbarComponent {
 
     // Calculate right position based on viewport width
     const right = Math.min(
-      viewportWidth - buttonRect.right - 10, // 10px from right edge
-      viewportWidth - 20 // Leave at least 20px from the right edge
+      viewportWidth - buttonRect.right - 10,
+      viewportWidth - 20
     );
 
     // Position below the button
-    const top = buttonRect.bottom + window.scrollY + 4; // 4px offset from button
+    const top = buttonRect.bottom + window.scrollY + 4;
 
     return {
       top: `${top}px`,
       right: `${Math.max(10, right)}px`,
       minWidth: '12rem',
-      maxHeight: 'calc(100vh - ' + (top + 20) + 'px)', // 20px from bottom
+      maxHeight: 'calc(100vh - ' + (top + 20) + 'px)',
       overflowY: 'auto',
     };
+  }
+
+  toggleSidebar() {
+    this.sidebarService.toggleSidebar();
+  }
+
+  // Funcionalidad del tema claro / oscuro
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    console.log('Modo actual:', this.isDarkMode);
+    const root = document.querySelector('html');
+    if (this.isDarkMode) {
+      root?.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root?.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+      this.isDarkMode = true;
+      document.documentElement.classList.add('dark');
+    } else {
+      this.isDarkMode = false;
+      document.documentElement.classList.remove('dark');
+    }
   }
 }
