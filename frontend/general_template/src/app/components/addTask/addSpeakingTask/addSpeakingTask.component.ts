@@ -20,6 +20,7 @@ export class AddSpeakingTaskComponent implements OnInit {
   team: string = '';
   name_of_item_writer: string = '';
   date: Date | string = '';
+  status: string = 'pendiente';
 
   main_topic_area: string = '';
   nature_of_content: string = '';
@@ -69,6 +70,8 @@ export class AddSpeakingTaskComponent implements OnInit {
       team: this.team,
       name_of_item_writer: this.name_of_item_writer,
       date: this.date,
+      status: this.status,
+
       main_topic_area: this.main_topic_area,
       nature_of_content: this.nature_of_content,
       expected_vocabulary: this.expected_vocabulary,

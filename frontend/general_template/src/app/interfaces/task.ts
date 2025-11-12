@@ -4,6 +4,7 @@ export interface BaseTask {
   team: string;
   date: Date | string;
   name_of_item_writer: string;
+  status: string;
 }
 
 export interface ListeningTask extends BaseTask {

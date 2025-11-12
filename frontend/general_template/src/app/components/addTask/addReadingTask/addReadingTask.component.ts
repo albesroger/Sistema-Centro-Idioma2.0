@@ -20,6 +20,7 @@ export class AddReadingTaskComponent {
   team: string = '';
   name_of_item_writer: string = '';
   date: Date | string = '';
+  status: string = 'pendiente';
 
   /////////////////////////
   text_source: string = '';
@@ -82,6 +83,7 @@ export class AddReadingTaskComponent {
       team: this.team,
       name_of_item_writer: this.name_of_item_writer,
       date: this.date,
+      status: this.status,
 
       text_source: this.text_source,
       where_found: this.where_found,
@@ -95,16 +97,11 @@ export class AddReadingTaskComponent {
       grammar: this.grammar,
       number_of_words: this.number_of_words,
       comprehensible_cefr_level: this.comprehensible_cefr_level,
-
       item_characteristics: this.item_characteristics,
-
       time_to_do_total_task_minutes: this.time_to_do_total_task_minutes,
       task_level_estimated: this.task_level_estimated,
-
       test_task: this.test_task,
-
       answer_key: this.answer_key,
-
       comments: this.comments,
 
       feedback_provided_by: this.feedback_provided_by,

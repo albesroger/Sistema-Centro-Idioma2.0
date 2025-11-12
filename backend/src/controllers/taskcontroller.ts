@@ -30,7 +30,7 @@ export default {
   // Crear una tarea con su subtipo
   async createTask(req: Request, res: Response) {
     try {
-      const { task_type, task_id, name_of_item_writer, team, date } = req.body;
+      const { task_type, task_id, name_of_item_writer, team, date, status } = req.body;
 
       if (task_id) {
         const existingTask = await Task.findOne({ where: { task_id } });
@@ -46,6 +46,7 @@ export default {
         name_of_item_writer,
         team,
         date,
+        status
       });
 
       // Crear subtipo según task_type

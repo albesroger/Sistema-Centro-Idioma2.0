@@ -17,6 +17,7 @@ export class SeeSpeakingTasks implements OnInit {
   team: string = '';
   date: Date | string = '';
   name_of_item_writer: string = '';
+  status: string = '';
 
   main_topic_area: string = '';
   nature_of_content: string = '';
@@ -66,6 +67,8 @@ export class SeeSpeakingTasks implements OnInit {
       team: this.team,
       date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
+      status: this.status,
+
       main_topic_area: this.main_topic_area,
       nature_of_content: this.nature_of_content,
       expected_vocabulary: this.expected_vocabulary,

@@ -19,8 +19,9 @@ export class AddWritingTaskComponent implements OnInit {
   task_id: number = 0;
   team: string = '';
   name_of_item_writer: string = '';
-
   date: Date | string = '';
+  status: string = 'pendiente';
+
   section: string = '';
   main_topic_area: string = '';
   nature_of_content: string = '';
@@ -66,6 +67,8 @@ export class AddWritingTaskComponent implements OnInit {
       team: this.team,
       name_of_item_writer: this.name_of_item_writer,
       date: this.date,
+      status: this.status,
+
       section: this.section,
       main_topic_area: this.main_topic_area,
       nature_of_content: this.nature_of_content,

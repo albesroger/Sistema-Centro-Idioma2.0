@@ -17,6 +17,7 @@ export class SeeWritingTasks implements OnInit {
   team: string = '';
   date: Date | string = '';
   name_of_item_writer: string = '';
+  status: string = '';
 
   section: string = '';
   main_topic_area: string = '';
@@ -65,6 +66,7 @@ export class SeeWritingTasks implements OnInit {
       team: this.team,
       date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
+      status: this.status,
       section: this.section,
       main_topic_area: this.main_topic_area,
       nature_of_content: this.nature_of_content,

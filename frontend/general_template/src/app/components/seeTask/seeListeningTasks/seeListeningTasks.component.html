@@ -41,6 +41,12 @@
           </th>
           <th
             scope="col"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
+          >
+            Status
+          </th>
+          <th
+            scope="col"
             class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
           >
             Actions
@@ -81,6 +87,13 @@
             class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
           >
             {{ item.length_of_input }}
+          </td>
+          <td
+            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
+          >
+            <p class="bg-red-200 text-red-700 flex justify-center rounded-2xl">
+              {{ item.status }}
+            </p>
           </td>
           <td
             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center"

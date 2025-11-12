@@ -16,6 +16,7 @@ export class SeeReadingTasks implements OnInit {
   task_type: string = 'reading';
   team: string = '';
   date: Date | string = '';
+  status: string = '';
 
   name_of_item_writer: string = '';
   text_source: string = '';
@@ -73,6 +74,8 @@ export class SeeReadingTasks implements OnInit {
       date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
       team: this.team,
+      status: this.status,
+      
       text_source: this.text_source,
       where_found: this.where_found,
       authenticity: this.authenticity,

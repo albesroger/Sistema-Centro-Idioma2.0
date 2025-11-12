@@ -8,6 +8,7 @@ interface TaskAttributes {
   name_of_item_writer?: string;
   team?: string;
   date?: Date;
+  status: string;
 }
 
 interface TaskCreationAttributes extends Optional<TaskAttributes, "task_id"> {}
@@ -21,6 +22,7 @@ export class Task
   public name_of_item_writer?: string;
   public team?: string;
   public date?: Date;
+  public status!: string;
 }
 
 Task.init(
@@ -41,6 +43,9 @@ Task.init(
     },
     date: {
       type: DataTypes.DATE,
+    },
+    status: {
+      type: DataTypes.STRING,
     },
   },
   {
