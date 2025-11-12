@@ -9,6 +9,7 @@ import { UserServiceService } from '../../../services/userService.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +22,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('pieChart') private pieChartRef!: ElementRef;
 
   // Estadísticas
-  totalEstudiantes = 0;
+  totalLider = 0;
   totalProfesores = 0;
-  cursosActivos = 0;
-  proximasClases = 0;
+  totalAdmin = 0;
+  totalCalidad = 0;
 
   private barChart: any;
   private pieChart: any;
@@ -40,18 +41,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   private cargarDatosDashboard(): void {
-    this.userService.getUser().subscribe((usuarios) => {
+    this.userService.getUser().subscribe((usuarios: User[]) => {
       // Contar estudiantes y profesores
-      this.totalEstudiantes = usuarios.filter(
-        (u: any) => u.rol === 'estudiante'
+      this.totalLider = usuarios.filter(
+        (user) => user.rol === 'Lider Proyecto'
       ).length;
       this.totalProfesores = usuarios.filter(
-        (u: any) => u.rol === 'profesor'
+        (user) => user.rol === 'profesor'
       ).length;
-
-      // Datos de ejemplo
-      this.cursosActivos = 5;
-      this.proximasClases = 3;
+      this.totalAdmin = usuarios.filter((user) => user.rol === 'admin').length;
+      this.totalCalidad = usuarios.filter(
+        (user) => user.rol === 'calidad'
+      ).length;
 
       // Configurar gráficos
       this.configurarGraficos(usuarios);
@@ -109,16 +110,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
         type: 'pie',
         data: {
           labels: Object.keys(rolesUsuarios).map((rol) =>
-            rol === 'estudiante'
-              ? 'Estudiantes'
+            rol === 'admin'
+              ? 'Admonistradores'
               : rol === 'profesor'
               ? 'Profesores'
-              : 'Otros'
+              : rol === 'calidad'
+              ? 'Aseguradores'
+              : rol === 'lider'
+              ? 'Lideres de equipo'
+              : ''
           ),
           datasets: [
             {
               data: Object.values(rolesUsuarios),
-              backgroundColor: ['#3b82f6', '#10b981', '#6b7280'],
+              backgroundColor: ['#3b82f6', '#10b981', '#6b7280', '#6b6280'],
             },
           ],
         },
@@ -127,7 +132,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           plugins: {
             title: {
               display: true,
-              text: 'Distribución de Usuarios',
+              text: 'Distribución',
             },
           },
         },

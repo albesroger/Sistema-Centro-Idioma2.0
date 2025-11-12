@@ -5,7 +5,7 @@ import { Op } from "sequelize";
 import jwt from "jsonwebtoken";
 
 export const register = async (req: Request, res: Response) => {
-  const { name, lastname, email, password } = req.body;
+  const { name, lastname, email, password, rol } = req.body;
 
   const user = await User.findOne({
     where: { [Op.or]: { email: email } },
@@ -25,6 +25,7 @@ export const register = async (req: Request, res: Response) => {
       lastname: lastname,
       email: email,
       password: passwordHash,
+      rol: rol,
     });
     return res.json({
       msg: `User ${name} ${lastname} created successfully`,
