@@ -18,6 +18,7 @@ export class SeeTasksComponent implements OnInit {
   task_type: string = 'listening';
   team: string = '';
   date: Date = new Date();
+  status: string = '';
 
   name_of_item_writer: string = '';
   text_source: string = '';
@@ -78,6 +79,8 @@ export class SeeTasksComponent implements OnInit {
       date: String(this.date).slice(0, 2),
       name_of_item_writer: this.name_of_item_writer,
       team: this.team,
+      status: this.status,
+
       text_source: this.text_source,
       where_found: this.where_found,
       authenticity: this.authenticity,

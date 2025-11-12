@@ -1,4 +1,3 @@
-
 <div class="w-full">
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
@@ -42,6 +41,12 @@
           </th>
           <th
             scope="col"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
+          >
+            Status
+          </th>
+          <th
+            scope="col"
             class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
           >
             Actions
@@ -82,6 +87,11 @@
             class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
           >
             {{ item.nature_of_content }}
+          </td>
+          <td
+            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200"
+          >
+            {{ item.status }}
           </td>
           <td
             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center"
