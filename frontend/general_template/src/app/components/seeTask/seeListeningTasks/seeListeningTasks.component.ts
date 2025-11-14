@@ -1,9 +1,7 @@
-import { Component, OnInit, Signal } from '@angular/core';
-import { ListeningTask, Task } from '../../../interfaces/task';
+import { Component, OnInit } from '@angular/core';
+import { ListeningTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
-import { error } from 'node:console';
-import { request } from 'node:http';
 import { map } from 'rxjs';
 
 @Component({
@@ -19,7 +17,6 @@ export class SeeTasksComponent implements OnInit {
   team: string = '';
   date: Date = new Date();
   status: string = '';
-
   name_of_item_writer: string = '';
   text_source: string = '';
   where_found: string = '';
@@ -47,6 +44,10 @@ export class SeeTasksComponent implements OnInit {
   feedback_date: string = '';
   feedback_text: string = '';
 
+  // ⭐ NUEVO: selección múltiple
+  selectedItems: ListeningTask[] = [];
+  allSelected = false;
+
   constructor(
     private _taskService: TaskService,
     private toastr: ToastrService
@@ -69,6 +70,8 @@ export class SeeTasksComponent implements OnInit {
       )
       .subscribe((data) => {
         this.listTasks = data;
+        this.selectedItems = [];
+        this.allSelected = false;
       });
   }
 
@@ -80,7 +83,6 @@ export class SeeTasksComponent implements OnInit {
       name_of_item_writer: this.name_of_item_writer,
       team: this.team,
       status: this.status,
-
       text_source: this.text_source,
       where_found: this.where_found,
       authenticity: this.authenticity,
@@ -107,13 +109,10 @@ export class SeeTasksComponent implements OnInit {
       feedback_date: this.feedback_date,
       feedback_text: this.feedback_text,
     };
-
     this._taskService.addTask(task).subscribe({
       next: (data) => {
-        // Actualizar la lista completa después de agregar
-        this.getListeningTasks();
         this.toastr.success('Tarea agregada', 'Éxito');
-        //this.clearForm();
+        this.getListeningTasks();
       },
       error: (error) => {
         this.toastr.error('Error al agregar la tarea', 'Error');
@@ -121,16 +120,56 @@ export class SeeTasksComponent implements OnInit {
     });
   }
 
+  
   deleteTask(id: number) {
     this._taskService.deleteTask(id).subscribe({
-      next: (data) => {
+      next: () => {
         this.getListeningTasks();
         this.toastr.success('Task eliminada');
       },
-      error: (error) => {
-        this.toastr.error('Error al eliminar Task');
-      },
+      error: () => this.toastr.error('Error al eliminar Task'),
     });
+  }
+
+  // ⭐ NUEVO: manejar selección individual
+  toggleSelection(item: ListeningTask) {
+    const index = this.selectedItems.indexOf(item);
+
+    if (index === -1) {
+      this.selectedItems.push(item);
+    } else {
+      this.selectedItems.splice(index, 1);
+    }
+
+    this.allSelected = this.selectedItems.length === this.listTasks.length;
+  }
+
+  // ⭐ NUEVO: seleccionar/deseleccionar todo
+  toggleSelectAll(event: any) {
+    this.allSelected = event.target.checked;
+
+    if (this.allSelected) {
+      this.selectedItems = [...this.listTasks];
+    } else {
+      this.selectedItems = [];
+    }
+  }
+
+  // ⭐ NUEVO: eliminar muchas tareas
+  deleteSelected() {
+    if (this.selectedItems.length === 0) return;
+
+    const ids = this.selectedItems.map((i) => i.task_id);
+
+    // Backend: eliminar cada una (puedo ayudarte a crear un endpoint deleteMany)
+    ids.forEach((id) => {
+      this._taskService.deleteTask(id).subscribe({
+        next: () => {},
+        error: () => this.toastr.error('Error eliminando una tarea'),
+      });
+    });
+
+    this.toastr.success('Tareas eliminadas');
     this.getListeningTasks();
   }
 }

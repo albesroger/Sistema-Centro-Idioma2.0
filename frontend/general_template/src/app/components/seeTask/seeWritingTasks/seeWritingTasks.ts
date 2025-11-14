@@ -34,6 +34,9 @@ export class SeeWritingTasks implements OnInit {
   feedback_date: string = '';
   feedback_text: string = '';
 
+  selectedItems: WritingTask[] = [];
+  allSelected = false;
+
   constructor(
     private _taskService: TaskService,
     private toastr: ToastrService
@@ -105,6 +108,48 @@ export class SeeWritingTasks implements OnInit {
         this.toastr.error('Error al eliminar Task');
       },
     });
+    this.getWritingTasks();
+  }
+
+  // ⭐ NUEVO: manejar selección individual
+  toggleSelection(item: WritingTask) {
+    const index = this.selectedItems.indexOf(item);
+
+    if (index === -1) {
+      this.selectedItems.push(item);
+    } else {
+      this.selectedItems.splice(index, 1);
+    }
+
+    this.allSelected = this.selectedItems.length === this.listTasks.length;
+  }
+
+  // ⭐ NUEVO: seleccionar/deseleccionar todo
+  toggleSelectAll(event: any) {
+    this.allSelected = event.target.checked;
+
+    if (this.allSelected) {
+      this.selectedItems = [...this.listTasks];
+    } else {
+      this.selectedItems = [];
+    }
+  }
+
+  // ⭐ NUEVO: eliminar muchas tareas
+  deleteSelected() {
+    if (this.selectedItems.length === 0) return;
+
+    const ids = this.selectedItems.map((i) => i.task_id);
+
+    // Backend: eliminar cada una (puedo ayudarte a crear un endpoint deleteMany)
+    ids.forEach((id) => {
+      this._taskService.deleteTask(id).subscribe({
+        next: () => {},
+        error: () => this.toastr.error('Error eliminando una tarea'),
+      });
+    });
+
+    this.toastr.success('Tareas eliminadas');
     this.getWritingTasks();
   }
 }

@@ -42,6 +42,9 @@ export class SeeReadingTasks implements OnInit {
   feedback_date: string = '';
   feedback_text: string = '';
 
+  selectedItems: ReadingTask[] = [];
+  allSelected = false;
+
   constructor(
     private _taskService: TaskService,
     private toastr: ToastrService
@@ -75,7 +78,7 @@ export class SeeReadingTasks implements OnInit {
       name_of_item_writer: this.name_of_item_writer,
       team: this.team,
       status: this.status,
-      
+
       text_source: this.text_source,
       where_found: this.where_found,
       authenticity: this.authenticity,
@@ -122,6 +125,45 @@ export class SeeReadingTasks implements OnInit {
         this.toastr.error('Error al eliminar Task');
       },
     });
+    this.getReadingTasks();
+  }
+
+  // ⭐ NUEVO: manejar selección individual
+  toggleSelection(item: ReadingTask) {
+    const index = this.selectedItems.indexOf(item);
+
+    if (index === -1) {
+      this.selectedItems.push(item);
+    } else {
+      this.selectedItems.splice(index, 1);
+    }
+
+    this.allSelected = this.selectedItems.length === this.listTasks.length;
+  }
+
+  toggleSelectAll(event: any) {
+    this.allSelected = event.target.checked;
+
+    if (this.allSelected) {
+      this.selectedItems = [...this.listTasks];
+    } else {
+      this.selectedItems = [];
+    }
+  }
+
+  deleteSelected() {
+    if (this.selectedItems.length === 0) return;
+
+    const ids = this.selectedItems.map((i) => i.task_id);
+
+    ids.forEach((id) => {
+      this._taskService.deleteTask(id).subscribe({
+        next: () => {},
+        error: () => this.toastr.error('Error eliminando una tarea'),
+      });
+    });
+
+    this.toastr.success('Tareas eliminadas');
     this.getReadingTasks();
   }
 }
