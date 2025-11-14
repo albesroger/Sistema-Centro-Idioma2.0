@@ -117,5 +117,6 @@ export class CurrentUsersComponent {
     this.lastname = '';
     this.email = '';
     this.rol = '';
+    this.userEditing = null;
   }
 }
