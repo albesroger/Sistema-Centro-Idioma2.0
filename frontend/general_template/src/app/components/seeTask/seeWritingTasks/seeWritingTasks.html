@@ -127,10 +127,21 @@
           >
             {{ item.nature_of_content }}
           </td>
-          <td
-            class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-900 dark:text-gray-100"
-          >
-            {{ item.status }}
+          <td class="px-2 py-4 whitespace-nowrap text-sm text-center w-12">
+            <p
+              class="flex justify-center rounded-2xl px-1"
+              [ngClass]="
+                item.status === 'revisada'
+                  ? 'bg-green-200 text-green-700'
+                  : item.status === 'pendiente'
+                  ? 'bg-yellow-200 text-yellow-700'
+                  : item.status === 'rechazada'
+                  ? 'bg-red-200 text-red-700'
+                  : 'bg-gray-200 text-gray-700'
+              "
+            >
+              {{ item.status }}
+            </p>
           </td>
           <td
             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center dark:text-gray-100"

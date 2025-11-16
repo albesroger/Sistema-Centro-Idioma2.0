@@ -3,10 +3,11 @@ import { SpeakingTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-see-speaking-tasks',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './seeSpeakingTasks.html',
 })
 export class SeeSpeakingTasks implements OnInit {
@@ -52,14 +53,20 @@ export class SeeSpeakingTasks implements OnInit {
       .getTaskByTypeSp('speaking')
       .pipe(
         map((item) =>
-          item.map((value) => ({
-            ...value,
-            date: String(value.date).slice(0, 10),
-          }))
+          item.map((value) => {
+            const speakingData = (value as any).speaking || {};
+            return {
+              ...value,
+              ...speakingData,
+              date: String(value.date).slice(0, 10),
+            };
+          })
         )
       )
       .subscribe((data) => {
         this.listTasks = data;
+        this.selectedItems = [];
+        this.allSelected = false;
       });
   }
 

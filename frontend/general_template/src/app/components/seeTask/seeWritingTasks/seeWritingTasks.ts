@@ -3,10 +3,11 @@ import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { WritingTask } from '../../../interfaces/task';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-see-writing-tasks',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './seeWritingTasks.html',
 })
 export class SeeWritingTasks implements OnInit {
@@ -51,14 +52,20 @@ export class SeeWritingTasks implements OnInit {
       .getTaskByTypeWr('writing')
       .pipe(
         map((item) =>
-          item.map((value) => ({
-            ...value,
-            date: String(value.date).slice(0, 10),
-          }))
+          item.map((value) => {
+            const writingData = (value as any).writing || {};
+            return {
+              ...value,
+              ...writingData,
+              date: String(value.date).slice(0, 10),
+            };
+          })
         )
       )
       .subscribe((data) => {
         this.listTasks = data;
+        this.selectedItems = [];
+        this.allSelected = false;
       });
   }
 

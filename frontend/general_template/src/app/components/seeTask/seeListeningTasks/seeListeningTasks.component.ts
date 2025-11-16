@@ -63,10 +63,14 @@ export class SeeTasksComponent implements OnInit {
       .getTaskByTypeLi('listening')
       .pipe(
         map((item) =>
-          item.map((value) => ({
-            ...value,
-            date: String(value.date).slice(0, 10),
-          }))
+          item.map((value) => {
+            const listeningData = (value as any).listening || {};
+            return {
+              ...value,
+              ...listeningData,
+              date: String(value.date).slice(0, 10),
+            };
+          })
         )
       )
       .subscribe((data) => {

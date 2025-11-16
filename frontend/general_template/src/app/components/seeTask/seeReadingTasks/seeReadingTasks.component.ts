@@ -3,10 +3,11 @@ import { ReadingTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-see-reading-tasks',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './seeReadingTasks.component.html',
 })
 export class SeeReadingTasks implements OnInit {
@@ -59,14 +60,20 @@ export class SeeReadingTasks implements OnInit {
       .getTaskByTypeRe('reading')
       .pipe(
         map((item) =>
-          item.map((value) => ({
-            ...value,
-            date: String(value.date).slice(0, 10),
-          }))
+          item.map((value) => {
+            const readingData = (value as any).reading || {};
+            return {
+              ...value,
+              ...readingData,
+              date: String(value.date).slice(0, 10),
+            };
+          })
         )
       )
       .subscribe((data) => {
         this.listTasks = data;
+        this.selectedItems = [];
+        this.allSelected = false;
       });
   }
 
