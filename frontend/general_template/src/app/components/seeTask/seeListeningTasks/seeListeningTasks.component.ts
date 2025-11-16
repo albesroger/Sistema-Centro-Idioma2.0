@@ -3,10 +3,11 @@ import { ListeningTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-see-listeningtasks',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './seeListeningTasks.component.html',
 })
 export class SeeTasksComponent implements OnInit {

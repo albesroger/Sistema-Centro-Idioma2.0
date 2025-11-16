@@ -20,7 +20,7 @@ export class AddListeningTaskComponent implements OnInit {
   team: string = '';
   name_of_item_writer: string = '';
   date: Date | string = '';
-  status: string = 'pendiente';
+  status: string = 'revisada';
 
   ////////////////////////
   text_source: string = '';
