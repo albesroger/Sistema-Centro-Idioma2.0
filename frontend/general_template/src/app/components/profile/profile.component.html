@@ -1,13 +1,23 @@
-<main class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <!-- Contenedor principal -->
-
+<app-navbar></app-navbar>
+<main
+  class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300"
+>
+  <button
+    (click)="goBack()"
+    class="btn btn-link text-gray-700 dark:text-gray-300"
+  >
+    <i
+      class="fas fa-arrow-left dark:text-white text-blue-600 font-semibold font-sans"
+      >Home / Profile
+    </i>
+  </button>
   <div class="max-w-3xl mx-auto">
-    <!-- Mostrar solo cuando no esté cargando y no haya error -->
-
     @if (!loading && !error && user) {
 
     <!-- Tarjeta de perfil -->
-    <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
+    <div
+      class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden transition-colors"
+    >
       <!-- Encabezado con fondo degradado -->
       <div
         class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 sm:p-8 text-white"
@@ -15,11 +25,11 @@
         <div class="flex flex-col sm:flex-row items-center gap-6">
           <!-- Avatar -->
           <div
-            class="h-24 w-24 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl font-bold text-white"
+            class="h-24 w-24 rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm flex items-center justify-center text-3xl font-bold text-white"
           >
             @if (user.name || user.email) {
             <span>{{
-              user.name?.charAt(0) || user.email.charAt(0) || "U" | uppercase
+              user.name?.charAt(0) || user.email.charAt(0) | uppercase
             }}</span>
             } @else {
             <svg
@@ -41,14 +51,17 @@
 
           <!-- Información principal -->
           <div class="text-center sm:text-left">
-            <h1 class="text-2xl sm:text-3xl font-bold">
+            <h1
+              class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white"
+            >
               {{ user.name || "Usuario" }} {{ user.lastname || "" }}
             </h1>
+
             <div
               class="mt-1 flex items-center justify-center sm:justify-start gap-2"
             >
               <span
-                class="px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm"
+                class="px-3 py-1 rounded-full text-xs font-medium bg-white/20 dark:bg-black/20 text-white backdrop-blur-sm"
               >
                 {{ user.rol ? (user.rol | titlecase) : "Usuario" }}
               </span>
@@ -62,23 +75,33 @@
         <!-- Sección de información personal -->
         <div class="mb-8">
           <h2
-            class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-100"
+            class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 pb-2 border-b border-gray-100 dark:border-gray-700"
           >
             Información Personal
           </h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @if (user.email) {
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <div class="text-sm font-medium text-gray-500">
+            <div
+              class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-colors"
+            >
+              <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                 Correo Electrónico
               </div>
-              <div class="mt-1 text-gray-900">{{ user.email }}</div>
+              <div class="mt-1 text-gray-900 dark:text-gray-100">
+                {{ user.email }}
+              </div>
             </div>
             } @if (user.credencial) {
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <div class="text-sm font-medium text-gray-500">Credencial</div>
-              <div class="mt-1 text-gray-900">{{ user.credencial }}</div>
+            <div
+              class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-colors"
+            >
+              <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                Credencial
+              </div>
+              <div class="mt-1 text-gray-900 dark:text-gray-100">
+                {{ user.credencial }}
+              </div>
             </div>
             }
           </div>
@@ -86,7 +109,7 @@
 
         <!-- Acciones -->
         <div
-          class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100"
+          class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100 dark:border-gray-700"
         >
           <button
             (click)="loadUser()"
@@ -111,16 +134,17 @@
         </div>
       </div>
     </div>
+
     }
 
-    <!-- Estado de carga -->
+    <!-- Loading -->
     @if (loading) {
     <div class="text-center py-12">
       <div
-        class="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600"
+        class="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400"
       >
         <svg
-          class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500"
+          class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500 dark:text-indigo-300"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -144,13 +168,15 @@
     </div>
     }
 
-    <!-- Mensaje de error -->
+    <!-- Error -->
     @if (error && !loading) {
-    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
+    <div
+      class="bg-red-50 dark:bg-red-900/30 border-l-4 border-red-400 dark:border-red-600 p-4 rounded transition-colors"
+    >
       <div class="flex">
         <div class="flex-shrink-0">
           <svg
-            class="h-5 w-5 text-red-400"
+            class="h-5 w-5 text-red-400 dark:text-red-300"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -163,13 +189,13 @@
           </svg>
         </div>
         <div class="ml-3">
-          <p class="text-sm text-red-700">{{ error }}</p>
+          <p class="text-sm text-red-700 dark:text-red-300">{{ error }}</p>
           <div class="mt-2">
             <button
               (click)="loadUser()"
-              class="text-sm font-medium text-red-700 hover:text-red-600 focus:outline-none focus:underline"
+              class="text-sm font-medium text-red-700 dark:text-red-300 hover:text-red-600 dark:hover:text-red-200 focus:outline-none focus:underline"
             >
-              Reintentar <span aria-hidden="true">&rarr;</span>
+              Reintentar →
             </button>
           </div>
         </div>

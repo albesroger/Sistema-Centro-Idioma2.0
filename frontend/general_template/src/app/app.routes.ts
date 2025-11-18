@@ -29,40 +29,54 @@ export const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-      { path: 'inicio', component: HomeComponent },
-      { path: 'users', component: CurrentUsersComponent },
-      // Agrega más rutas según sea necesario
-    ]
+      {
+        path: 'inicio',
+        component: HomeComponent,
+        data: { breadcrumb: 'Inicio' },
+      },
+      {
+        path: 'users',
+        component: CurrentUsersComponent,
+        data: { breadcrumb: 'users' },
+      },
+    ],
+    data: { breadcrumb: 'Dashboard' },
   },
   {
     path: 'addListeningTask',
     component: AddListeningTaskComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'Add Listening Task' },
   },
   {
     path: 'addReadingTask',
     component: AddReadingTaskComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'Add Reading Task' },
   },
   {
     path: 'addSpeakingTask',
     component: AddSpeakingTaskComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'Add Speaking Task' },
   },
   {
     path: 'addWritingTask',
     component: AddWritingTaskComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'Add Writing Task' },
   },
   {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'Profile' },
   },
   {
     path: 'seeTask',
     component: SeeTaskComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'See Task' },
   },
   {
     path: 'maintenance',

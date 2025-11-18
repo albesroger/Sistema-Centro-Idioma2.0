@@ -77,23 +77,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
           labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
           datasets: [
             {
-              label: 'Nuevos Estudiantes',
+              label: 'New Taks',
               data: [12, 19, 3, 5, 2, 3],
               backgroundColor: '#3b82f6',
             },
           ],
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true },
-          },
-          plugins: {
-            title: {
-              display: true,
-              text: 'Inscripciones Mensuales',
-            },
-          },
         },
       });
     }
@@ -111,13 +99,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
         data: {
           labels: Object.keys(rolesUsuarios).map((rol) =>
             rol === 'admin'
-              ? 'Admonistradores'
+              ? 'Administrator'
               : rol === 'profesor'
-              ? 'Profesores'
+              ? 'Teachers'
               : rol === 'calidad'
-              ? 'Aseguradores'
+              ? 'Quality Assurance'
               : rol === 'lider'
-              ? 'Lideres de equipo'
+              ? 'Project leader'
               : ''
           ),
           datasets: [
@@ -132,7 +120,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           plugins: {
             title: {
               display: true,
-              text: 'Distribución',
+              text: 'Distribution',
             },
           },
         },

@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb" class="bg-gray-900 p-3 rounded-md shadow-md">
+  <ol class="flex items-center space-x-2 text-sm text-gray-300">
+    @for (crumb of breadcrumbs; track crumb; let last = $last) {
+    <li class="flex items-center">
+      @if (!last) {
+      <a [routerLink]="crumb.url" class="hover:text-white transition-colors">
+        {{ crumb.label }}
+      </a>
+      <span class="mx-2 text-gray-500">/</span>
+      } @else {
+      <span class="text-gray-400 font-semibold">{{ crumb.label }}</span>
+      }
+    </li>
+    }
+  </ol>
+</nav>

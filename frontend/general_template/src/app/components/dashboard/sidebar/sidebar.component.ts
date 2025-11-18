@@ -18,10 +18,10 @@ interface MenuItem {
 })
 export class SidebarComponent implements OnInit {
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/dashboard/inicio' },
-    { label: 'Usuarios', icon: 'people', route: '/dashboard/users' },
-    { label: 'Cursos', icon: 'school', route: '/dashboard/courses' },
-    { label: 'Configuración', icon: 'settings', route: '/dashboard/settings' },
+    { label: 'Home', icon: 'home', route: '/dashboard/inicio' },
+    { label: 'User', icon: 'people', route: '/dashboard/users' },
+    //{ label: 'Cursos', icon: 'school', route: '/dashboard/courses' },
+    //{ label: 'Configuración', icon: 'settings', route: '/dashboard/settings' },
   ];
   isVisible = true;
 

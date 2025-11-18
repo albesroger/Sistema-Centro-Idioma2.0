@@ -5,8 +5,8 @@ import { DropdownComponent } from '../dropdown/dropdown.component';
 import { SeeReadingTasks } from './seeReadingTasks/seeReadingTasks.component';
 import { ChangeTaskTypeComponent } from './changeTaskType/changeTaskType.component';
 import { TaskTypeService } from '../../services/changeTaskType.service';
-import { SeeWritingTasks } from "./seeWritingTasks/seeWritingTasks";
-import { SeeSpeakingTasks } from "./seeSpeakingTasks/seeSpeakingTasks";
+import { SeeWritingTasks } from './seeWritingTasks/seeWritingTasks';
+import { SeeSpeakingTasks } from './seeSpeakingTasks/seeSpeakingTasks';
 
 @Component({
   selector: 'app-see-task',
@@ -17,8 +17,8 @@ import { SeeSpeakingTasks } from "./seeSpeakingTasks/seeSpeakingTasks";
     SeeReadingTasks,
     ChangeTaskTypeComponent,
     SeeWritingTasks,
-    SeeSpeakingTasks
-],
+    SeeSpeakingTasks,
+  ],
   templateUrl: './seeTask.component.html',
 })
 export class SeeTaskComponent {
