@@ -70,6 +70,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   }
 
   private withHome(crumbs: Breadcrumb[]): Breadcrumb[] {
+<<<<<<< HEAD
     const homeUrl = '/homePage'; // <--- NUEVA URL DE HOME
 
     // si no hay nada, devolvemos solo Home
@@ -88,10 +89,31 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     // si ya empieza en Home, dejarlo (pero normalizamos la URL)
     if (crumbs[0].url === homeUrl || crumbs[0].label.toLowerCase() === 'home') {
       crumbs[0].url = homeUrl;
+=======
+    // si no hay nada, devolvemos solo Home
+    if (!crumbs.length) {
+      return [{ label: 'Home', url: '/' }];
+    }
+
+    // si estamos en la Home (ruta '') → solo Home
+    if (
+      crumbs.length === 1 &&
+      (crumbs[0].url === '/' || crumbs[0].label.toLowerCase() === 'home')
+    ) {
+      return [{ label: 'Home', url: '/' }];
+    }
+
+    // si ya empieza en Home, dejarlo
+    if (crumbs[0].url === '/' || crumbs[0].label.toLowerCase() === 'home') {
+>>>>>>> 59f1fba (add migajas)
       return crumbs;
     }
 
     // en cualquier otro caso, anteponer Home
+<<<<<<< HEAD
     return [{ label: 'Home', url: homeUrl }, ...crumbs];
+=======
+    return [{ label: 'Home', url: '/' }, ...crumbs];
+>>>>>>> 59f1fba (add migajas)
   }
 }

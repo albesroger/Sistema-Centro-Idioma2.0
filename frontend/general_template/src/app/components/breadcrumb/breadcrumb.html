@@ -4,15 +4,26 @@
   <ng-container *ngFor="let bc of breadcrumbs; let last = last">
     <!-- Items anteriores (clicables, grises) -->
     <ng-container *ngIf="!last">
+<<<<<<< HEAD
       <a [routerLink]="bc.url" class="text-[#8C8C8C] dark:text-slate-300 hover:underline">
         {{ bc.label }}
       </a>
       <span class="px-1 text-[#8C8C8C] dark:text-slate-50">-</span>
+=======
+      <a [routerLink]="bc.url" class="text-[#8C8C8C] hover:underline">
+        {{ bc.label }}
+      </a>
+      <span class="px-1 text-[#8C8C8C]">-</span>
+>>>>>>> 59f1fba (add migajas)
     </ng-container>
 
     <!-- Último (ruta actual, azul y bold) -->
     <ng-container *ngIf="last">
+<<<<<<< HEAD
       <span class="font-bold text-[#0B2C5A] dark:text-white"> {{ bc.label }} </span>
+=======
+      <span class="font-bold text-[#0B2C5A]"> {{ bc.label }} </span>
+>>>>>>> 59f1fba (add migajas)
     </ng-container>
   </ng-container>
 </nav>
