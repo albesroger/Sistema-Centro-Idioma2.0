@@ -20,8 +20,8 @@ export class SingInComponent {
   name: string = '';
   lastname: string = '';
   email: string = '';
-  password: string = '';
-  repeatPassword: string = '';
+  password: string = `${this.name}+${123}`;
+  repeatPassword: string = `${this.name}+${123}`;
   credencial: string = '';
   rol: string = 'profesor';
 

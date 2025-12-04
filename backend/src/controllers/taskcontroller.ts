@@ -7,6 +7,7 @@ import {
   WritingTask,
   setupAssociations,
 } from "../models/index.js";
+import { Op, fn, col, where } from "sequelize";
 
 // Initialize associat
 
@@ -200,6 +201,42 @@ export default {
         message: errorMessage,
         requestId: Date.now(),
         ...(process.env.NODE_ENV === "development" && { stack: errorStack }),
+      });
+    }
+  },
+
+  // Obtener todas las tareas asociadas a un usuario (por nombre o equipo)
+  async getTasksByUser(req: Request, res: Response) {
+    try {
+      const { user } = req.params;
+      if (!user || !user.trim()) {
+        return res.status(400).json({
+          error: "Debe proporcionar el identificador del usuario",
+        });
+      }
+
+      const normalizedUser = user.toLowerCase().trim();
+
+      const tasks = await Task.findAll({
+        where: {
+          [Op.or]: [
+            where(fn("LOWER", col("name_of_item_writer")), normalizedUser),
+            where(fn("LOWER", col("team")), normalizedUser),
+          ],
+        },
+        include: [
+          { model: SpeakingTask, as: "speaking" },
+          { model: ListeningTask, as: "listening" },
+          { model: ReadingTask, as: "reading" },
+          { model: WritingTask, as: "writing" },
+        ],
+      });
+
+      return res.json(tasks);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        error: "Error obteniendo las tareas del usuario",
       });
     }
   },

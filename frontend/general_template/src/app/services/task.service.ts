@@ -41,6 +41,19 @@ export class TaskService {
     );
   }
 
+  getTasksByUser(itemWriter: string): Observable<Task[]> {
+    let headers = new HttpHeaders();
+    const token = localStorage.getItem('myToken');
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.get<Task[]>(
+      `${this.AppUrl}${this.APIUrl}/getTasksByUser/${encodeURIComponent(itemWriter)}`,
+      { headers }
+    );
+  }
+
   getTaskByTypeLi(type: string): Observable<ListeningTask[]> {
     return this.http.get<ListeningTask[]>(
       `${this.AppUrl}${this.APIUrl}/getTaskByType/${type}`

@@ -27,7 +27,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
-    this.fill_out_tasks();
   }
 
   loadUser(): void {
@@ -38,19 +37,35 @@ export class ProfileComponent implements OnInit {
       next: (userData: User) => {
         this.user = userData;
         this.loading = false;
+        this.loadTasksForUser(userData);
       },
       error: (err) => {
         this.error =
           err.error?.message || err.message || 'Error al cargar el perfil';
         this.loading = false;
         this.user = null;
+        this.taskForUser = [];
       },
     });
   }
 
-  fill_out_tasks() {
+  private loadTasksForUser(user: User): void {
+    const identifierParts = [user.name, user.lastname].filter(
+      (value) => !!value
+    );
+    let identifier = identifierParts.join(' ').trim();
+
+    if (!identifier && user.email) {
+      identifier = user.email;
+    }
+
+    if (!identifier) {
+      this.taskForUser = [];
+      return;
+    }
+
     this._taskService
-      .getTask()
+      .getTasksByUser(identifier)
       .pipe(
         map((item) =>
           item.map((value) => {
@@ -63,8 +78,13 @@ export class ProfileComponent implements OnInit {
           })
         )
       )
-      .subscribe((data) => {
-        this.taskForUser = data;
+      .subscribe({
+        next: (data) => {
+          this.taskForUser = data;
+        },
+        error: () => {
+          this.taskForUser = [];
+        },
       });
   }
 
