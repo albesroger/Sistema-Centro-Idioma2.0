@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.userService.getUser().subscribe((usuarios: User[]) => {
       // Contar estudiantes y profesores
       this.totalLider = usuarios.filter(
-        (user) => user.rol === 'Lider Proyecto'
+        (user) => user.rol === 'lider'
       ).length;
       this.totalProfesores = usuarios.filter(
         (user) => user.rol === 'profesor'
