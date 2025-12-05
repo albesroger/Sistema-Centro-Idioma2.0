@@ -43,30 +43,6 @@ export const routes: Routes = [
     data: { breadcrumb: 'Dashboard' },
   },
   {
-    path: 'addListeningTask',
-    component: AddListeningTaskComponent,
-    canActivate: [guardGuard],
-    data: { breadcrumb: 'Add Listening Task' },
-  },
-  {
-    path: 'addReadingTask',
-    component: AddReadingTaskComponent,
-    canActivate: [guardGuard],
-    data: { breadcrumb: 'Add Reading Task' },
-  },
-  {
-    path: 'addSpeakingTask',
-    component: AddSpeakingTaskComponent,
-    canActivate: [guardGuard],
-    data: { breadcrumb: 'Add Speaking Task' },
-  },
-  {
-    path: 'addWritingTask',
-    component: AddWritingTaskComponent,
-    canActivate: [guardGuard],
-    data: { breadcrumb: 'Add Writing Task' },
-  },
-  {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [guardGuard],
@@ -77,7 +53,30 @@ export const routes: Routes = [
     component: SeeTaskComponent,
     canActivate: [guardGuard],
     data: { breadcrumb: 'See Task' },
+    children: [
+      {
+        path: 'addListeningTask',
+        component: AddListeningTaskComponent,
+        data: { breadcrumb: 'Add Listening Task' },
+      },
+      {
+        path: 'addReadingTask',
+        component: AddReadingTaskComponent,
+        data: { breadcrumb: 'Add Reading Task' },
+      },
+      {
+        path: 'addSpeakingTask',
+        component: AddSpeakingTaskComponent,
+        data: { breadcrumb: 'Add Speaking Task' },
+      },
+      {
+        path: 'addWritingTask',
+        component: AddWritingTaskComponent,
+        data: { breadcrumb: 'Add Writing Task' },
+      },
+    ],
   },
+
   {
     path: 'maintenance',
     component: MaintenanceComponent,
@@ -90,6 +89,7 @@ export const routes: Routes = [
     path: 'homePage',
     component: InicioPageComponent,
     canActivate: [guardGuard],
+    data: { breadcrumb: 'Home' },
   },
   {
     path: '',

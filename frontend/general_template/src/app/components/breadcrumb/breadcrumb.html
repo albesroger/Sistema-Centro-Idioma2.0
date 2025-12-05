@@ -1,0 +1,18 @@
+<nav
+  class="flex flex-wrap items-center text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px]"
+>
+  <ng-container *ngFor="let bc of breadcrumbs; let last = last">
+    <!-- Items anteriores (clicables, grises) -->
+    <ng-container *ngIf="!last">
+      <a [routerLink]="bc.url" class="text-[#8C8C8C] hover:underline">
+        {{ bc.label }}
+      </a>
+      <span class="px-1 text-[#8C8C8C]">-</span>
+    </ng-container>
+
+    <!-- Último (ruta actual, azul y bold) -->
+    <ng-container *ngIf="last">
+      <span class="font-bold text-[#0B2C5A]"> {{ bc.label }} </span>
+    </ng-container>
+  </ng-container>
+</nav>

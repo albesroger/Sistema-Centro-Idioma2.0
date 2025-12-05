@@ -7,10 +7,11 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Task } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { map } from 'rxjs';
+import { BreadcrumbComponent } from "../breadcrumb/breadcrumb";
 
 @Component({
   selector: 'app-profile',
-  imports: [TitleCasePipe, UpperCasePipe, NavbarComponent],
+  imports: [TitleCasePipe, UpperCasePipe, NavbarComponent, BreadcrumbComponent],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {

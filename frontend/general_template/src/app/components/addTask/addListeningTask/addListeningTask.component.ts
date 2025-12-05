@@ -8,10 +8,11 @@ import { TaskService } from '../../../services/task.service';
 import { ListeningTask } from '../../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NavbarComponent } from '../../navbar/navbar.component';
+import { BreadcrumbComponent } from "../../breadcrumb/breadcrumb";
 
 @Component({
   selector: 'add-task',
-  imports: [CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent, BreadcrumbComponent],
   templateUrl: './addListeningTask.component.html',
 })
 export class AddListeningTaskComponent implements OnInit {
