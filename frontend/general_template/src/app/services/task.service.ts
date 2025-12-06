@@ -46,7 +46,7 @@ export class TaskService {
     });
   }
 
-  getTaskById(id: number): Observable<Task> {
+  getTaskById(id: string | number): Observable<Task> {
     return this.http.get<Task>(
       `${this.AppUrl}${this.APIUrl}/getTaskById/${id}`,
       { headers: this.authHeaders() }

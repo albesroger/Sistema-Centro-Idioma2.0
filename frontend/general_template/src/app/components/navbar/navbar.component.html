@@ -107,7 +107,7 @@
           } @for (notif of notifications(); track notif.id) {
           <button
             class="w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            (click)="markAsRead(notif.id)"
+            (click)="openNotification(notif)"
           >
             <div class="flex items-start gap-2">
               <span

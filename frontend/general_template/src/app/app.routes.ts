@@ -12,6 +12,7 @@ import { AddListeningTaskComponent } from './components/addTask/addListeningTask
 import { AddReadingTaskComponent } from './components/addTask/addReadingTask/addReadingTask.component';
 import { AddSpeakingTaskComponent } from './components/addTask/addSpeakingTask/addSpeakingTask.component';
 import { AddWritingTaskComponent } from './components/addTask/addWritingTask/addWritingTask';
+import { ReviewTaskComponent } from './components/seeTask/reviewTask/reviewTask.component';
 import { HomeComponent } from './components/dashboard/home/home.component';
 import { CurrentUsersComponent } from './components/dashboard/currentUsers/currentUsers.component';
 
@@ -73,6 +74,11 @@ export const routes: Routes = [
         path: 'addWritingTask',
         component: AddWritingTaskComponent,
         data: { breadcrumb: 'Add Writing Task' },
+      },
+      {
+        path: 'review/:id',
+        component: ReviewTaskComponent,
+        data: { breadcrumb: 'Revisar Tarea' },
       },
     ],
   },

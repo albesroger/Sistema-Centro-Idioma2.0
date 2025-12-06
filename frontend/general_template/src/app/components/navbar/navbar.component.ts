@@ -85,6 +85,13 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  openNotification(notif: Notification) {
+    if (!notif) return;
+    this.markAsRead(notif.id);
+    this.showNotifications.set(false);
+    this.router.navigate(['/seeTask', 'review', notif.task_id]);
+  }
+
   markAllAsRead() {
     this.notificationService.markAllAsRead().subscribe({
       next: () => this.loadNotifications(),
