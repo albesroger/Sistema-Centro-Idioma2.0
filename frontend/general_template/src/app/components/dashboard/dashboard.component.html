@@ -1,8 +1,8 @@
+<!-- Navbar -->
+<app-navbar class="fixed top-0 left-0 right-0 z-30"></app-navbar>
 <div
   class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300"
 >
-  <!-- Navbar -->
-  <app-navbar class="fixed top-0 left-0 right-0 z-30"></app-navbar>
 
   <div class="flex flex-1 pt-13">
     <!-- Sidebar -->
@@ -12,8 +12,9 @@
     <main
       class="flex-1 p-4 md:p-6 overflow-auto transition-all duration-300 ease-in-out lg:ml-64"
     >
+    <app-breadcrumb></app-breadcrumb>
       <div
-        class="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-700 p-6 transition-colors duration-300"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-700 p-6 transition-colors duration-300 mt-2"
       >
         <router-outlet></router-outlet>
       </div>

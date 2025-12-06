@@ -32,12 +32,12 @@ export const routes: Routes = [
       {
         path: 'inicio',
         component: HomeComponent,
-        data: { breadcrumb: 'Inicio' },
+        data: { breadcrumb: 'Control Panel' },
       },
       {
         path: 'users',
         component: CurrentUsersComponent,
-        data: { breadcrumb: 'users' },
+        data: { breadcrumb: 'Users' },
       },
     ],
     data: { breadcrumb: 'Dashboard' },
