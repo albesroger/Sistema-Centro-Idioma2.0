@@ -2,6 +2,8 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnInit,
+  computed,
   signal,
   viewChild,
   ViewChild,
@@ -10,24 +12,43 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule, NgStyle } from '@angular/common';
 import { gsap } from 'gsap';
 import { SidebarService } from '../../services/sidebar.service';
+import { NotificationService } from '../../services/notification.service';
+import { Notification } from '../../interfaces/notification';
 
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, NgStyle, CommonModule],
   templateUrl: './navbar.component.html',
 })
-export class NavbarComponent {
-  constructor(private router: Router, private sidebarService: SidebarService) {
+export class NavbarComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private sidebarService: SidebarService,
+    private notificationService: NotificationService
+  ) {
     this.loadTheme();
   }
 
   mytoken = localStorage.getItem('myToken');
 
   isOpen = signal(false);
+  showNotifications = signal(false);
   divEl = viewChild<ElementRef>('divEl');
   desplegable = viewChild<ElementRef<HTMLElement>>('desplegable');
   @ViewChild('userButton') userButton!: ElementRef;
+  @ViewChild('notifButton') notifButton!: ElementRef;
+  @ViewChild('notifPanel') notifPanel!: ElementRef;
   isDarkMode = false;
+  notifications = signal<Notification[]>([]);
+  unreadCount = computed(
+    () => this.notifications().filter((n) => n.status === 'unread').length
+  );
+
+  ngOnInit(): void {
+    if (this.mytoken) {
+      this.loadNotifications();
+    }
+  }
 
   toggleArrow() {
     this.isOpen.update((isOpen) => !isOpen);
@@ -40,6 +61,35 @@ export class NavbarComponent {
     localStorage.removeItem('myToken');
     this.router.navigate(['/login']);
     window.location.reload();
+  }
+
+  loadNotifications() {
+    this.notificationService.getMyNotifications().subscribe({
+      next: (data) => this.notifications.set(data),
+      error: (err) => console.error('Error cargando notificaciones', err),
+    });
+  }
+
+  toggleNotifications() {
+    if (!this.mytoken) return;
+    this.showNotifications.update((v) => !v);
+    if (this.showNotifications()) {
+      this.loadNotifications();
+    }
+  }
+
+  markAsRead(id: number) {
+    this.notificationService.markAsRead(id).subscribe({
+      next: () => this.loadNotifications(),
+      error: (err) => console.error('Error marcando notificación', err),
+    });
+  }
+
+  markAllAsRead() {
+    this.notificationService.markAllAsRead().subscribe({
+      next: () => this.loadNotifications(),
+      error: (err) => console.error('Error marcando todas', err),
+    });
   }
 
   animationButton() {
@@ -59,12 +109,20 @@ export class NavbarComponent {
     ) {
       this.isOpen.set(false);
     }
+    if (
+      this.showNotifications() &&
+      !this.notifButton?.nativeElement.contains(event.target as Node) &&
+      !this.notifPanel?.nativeElement.contains(event.target as Node)
+    ) {
+      this.showNotifications.set(false);
+    }
   }
 
-  calculateDropdownPosition() {
-    if (!this.userButton?.nativeElement) return {};
+  calculateDropdownPosition(target?: HTMLElement) {
+    const anchor = target ?? this.userButton?.nativeElement ?? this.notifButton?.nativeElement;
+    if (!anchor) return {};
 
-    const buttonRect = this.userButton.nativeElement.getBoundingClientRect();
+    const buttonRect = anchor.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
 
     // Calculate right position based on viewport width

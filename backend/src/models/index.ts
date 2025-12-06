@@ -3,6 +3,7 @@ import { SpeakingTask } from "./speakingTask.js";
 import { ListeningTask } from "./listeningTask.js";
 import { ReadingTask } from "./readingTask.js";
 import { WritingTask } from "./writingTask.js";
+import { Notification } from "./notification.js";
 
 // Define associations
 const setupAssociations = () => {
@@ -43,6 +44,15 @@ const setupAssociations = () => {
     as: "task",
   });
 
+  Task.hasMany(Notification, {
+    foreignKey: "task_id",
+    as: "notifications",
+  });
+  Notification.belongsTo(Task, {
+    foreignKey: "task_id",
+    as: "task",
+  });
+
   console.log("All associations have been set up successfully.");
 };
 
@@ -53,5 +63,6 @@ export {
   ListeningTask,
   ReadingTask,
   WritingTask,
+  Notification,
   setupAssociations,
 };

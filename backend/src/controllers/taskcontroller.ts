@@ -7,6 +7,9 @@ import {
   WritingTask,
   setupAssociations,
 } from "../models/index.js";
+import { Notification } from "../models/notification.js";
+import { User } from "../models/user.js";
+import jwt from "jsonwebtoken";
 import { Op, fn, col, where } from "sequelize";
 
 // Initialize associat
@@ -27,49 +30,147 @@ const getModelTask = (type: string) => {
   return model[normalizedType as TaskType];
 };
 
+const TARGET_ROLES = ["lider", "asegurador", "lider_proyecto", "qa"];
+
+const getUserFromToken = async (req: Request) => {
+  const headerToken = req.headers["authorization"];
+  if (!headerToken || !headerToken.startsWith("Bearer ")) return null;
+
+  const token = headerToken.slice(7);
+  const decoded: any = jwt.verify(
+    token,
+    process.env.SECRET_KEY || "Jdz237797TH1dp7zjFzM"
+  );
+
+  const user = await User.findOne({ where: { email: decoded.email } });
+  return user;
+};
+
+const createNotificationsForTask = async (
+  task: Task,
+  senderName: string | null,
+  transaction: any
+) => {
+  const recipients = await User.findAll({
+    where: { rol: { [Op.in]: TARGET_ROLES } },
+    attributes: ["id", "name", "lastname", "rol"],
+    transaction,
+  });
+
+  if (!recipients.length) return;
+
+  const notifications = recipients.map((recipient) => ({
+    task_id: task.task_id,
+    title: "Nueva tarea para revisar",
+    message: `Se creó la tarea ${task.task_id} (${task.task_type}) por ${senderName ?? "un profesor"}. Revisa y deja feedback.`,
+    status: "unread" as const,
+    recipient_id: (recipient as any).id,
+    recipient_role: (recipient as any).rol,
+    sender_id: null,
+    sender_name: senderName,
+  }));
+
+  await Notification.bulkCreate(notifications, { transaction });
+};
+
 export default {
   // Crear una tarea con su subtipo
   async createTask(req: Request, res: Response) {
+    const transaction = await Task.sequelize?.transaction();
     try {
-      const { task_type, task_id, name_of_item_writer, team, date, status } = req.body;
+      const { task_type, task_id, name_of_item_writer, team, date, status } =
+        req.body;
 
       if (task_id) {
-        const existingTask = await Task.findOne({ where: { task_id } });
+        const existingTask = await Task.findOne({ where: { task_id }, transaction });
         if (existingTask) {
           return res.status(400).json({ error: "task_id ya existe" });
         }
       }
 
+      const currentUser = await getUserFromToken(req);
+      const senderName =
+        currentUser?.get
+          ? `${currentUser.get("name")} ${currentUser.get("lastname")}`
+          : name_of_item_writer ?? null;
+
       // Crear Task base
-      const task = await Task.create({
-        task_id,
-        task_type,
-        name_of_item_writer,
-        team,
-        date,
-        status
-      });
+      const task = await Task.create(
+        {
+          task_id,
+          task_type,
+          name_of_item_writer,
+          team,
+          date,
+          status,
+        },
+        { transaction }
+      );
 
       // Crear subtipo según task_type
       switch (task_type) {
         case "listening":
-          await ListeningTask.create({ task_id: task_id, ...req.body });
+          await ListeningTask.create(
+            {
+              task_id: task_id,
+              ...req.body,
+              feedback_provided_by: null,
+              feedback_team: null,
+              feedback_date: null,
+              feedback_text: null,
+            },
+            { transaction }
+          );
           break;
         case "speaking":
-          await SpeakingTask.create({ task_id: task_id, ...req.body });
+          await SpeakingTask.create(
+            {
+              task_id: task_id,
+              ...req.body,
+              feedback_provided_by: null,
+              feedback_team: null,
+              feedback_date: null,
+              feedback_text: null,
+            },
+            { transaction }
+          );
           break;
         case "reading":
-          await ReadingTask.create({ task_id: task_id, ...req.body });
+          await ReadingTask.create(
+            {
+              task_id: task_id,
+              ...req.body,
+              feedback_provided_by: null,
+              feedback_team: null,
+              feedback_date: null,
+              feedback_text: null,
+            },
+            { transaction }
+          );
           break;
         case "writing":
-          await WritingTask.create({ task_id: task_id, ...req.body });
+          await WritingTask.create(
+            {
+              task_id: task_id,
+              ...req.body,
+              feedback_provided_by: null,
+              feedback_team: null,
+              feedback_date: null,
+              feedback_text: null,
+            },
+            { transaction }
+          );
           break;
         default:
           return res.status(400).json({ error: "Tipo de tarea no válido" });
       }
 
+      await createNotificationsForTask(task, senderName, transaction);
+
+      await transaction?.commit();
       return res.status(201).json({ message: "Tarea creada", task });
     } catch (error) {
+      await transaction?.rollback();
       console.error(error);
       return res.status(500).json({ error: "Error creando la tarea" });
     }

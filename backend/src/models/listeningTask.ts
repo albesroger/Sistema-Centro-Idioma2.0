@@ -32,13 +32,24 @@ export const ListeningTask = sequelize.define("ListeningTask", {
   test_task: DataTypes.TEXT,
   answer_key: DataTypes.TEXT,
   comments: DataTypes.TEXT,
-  feedback_provided_by: DataTypes.STRING,
-  feedback_team: DataTypes.STRING,
-  feedback_date: DataTypes.DATE,
-  feedback_text: DataTypes.TEXT
+  feedback_provided_by: {
+    type: DataTypes.STRING,
+    defaultValue: null,
+  },
+  feedback_team: {
+    type: DataTypes.STRING,
+    defaultValue: null,
+  },
+  feedback_date: {
+    type: DataTypes.DATE,
+    defaultValue: null,
+  },
+  feedback_text: {
+    type: DataTypes.TEXT,
+    defaultValue: null,
+  }
 }, {
   tableName: "listening_tasks",
   timestamps: false
 });
-
 

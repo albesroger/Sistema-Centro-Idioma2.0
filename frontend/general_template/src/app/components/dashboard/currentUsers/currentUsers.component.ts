@@ -38,7 +38,7 @@ export class CurrentUsersComponent {
 
   addUser() {
     if (this.userEditing) {
-      // Actualizar producto existente
+      // Actualizar usuario existente
       const updatedUser: User = {
         ...this.userEditing,
         id: this.userEditing.id,
@@ -57,7 +57,7 @@ export class CurrentUsersComponent {
           this.clearForm();
         },
         error: (error) => {
-          this.toastr.error('Error al actualizar el producto', 'Error');
+          this.toastr.error('Error al actualizar el usuario', 'Error');
         },
       });
     } else {
@@ -73,11 +73,11 @@ export class CurrentUsersComponent {
         next: (data) => {
           // Actualizar la lista completa después de agregar
           this.getUser();
-          this.toastr.success('Producto agregado', 'Éxito');
+          this.toastr.success('Usuario agregado', 'Éxito');
           this.clearForm();
         },
         error: (error) => {
-          this.toastr.error('Error al agregar el producto', 'Error');
+          this.toastr.error('Error al agregar el usuario', 'Error');
         },
       });
     }
@@ -85,13 +85,11 @@ export class CurrentUsersComponent {
   }
 
   updateUser(user: User) {
-
     this.userEditing = user;
     this.name = user.name || '';
     this.lastname = user.lastname || '';
     this.email = user.email || '';
     this.rol = user.rol || 'profesor';
-   
   }
 
   deleteUser(id: number | undefined) {

@@ -24,10 +24,22 @@ export const SpeakingTask = sequelize.define(
     time_to_do_total_task_minutes: DataTypes.INTEGER,
     task_level_estimated: DataTypes.STRING,
     comments: DataTypes.TEXT,
-    feedback_provided_by: DataTypes.STRING,
-    feedback_team: DataTypes.STRING,
-    feedback_date: DataTypes.DATE,
-    feedback_text: DataTypes.TEXT,
+    feedback_provided_by: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
+    feedback_team: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
+    feedback_date: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+    },
+    feedback_text: {
+      type: DataTypes.TEXT,
+      defaultValue: null,
+    },
     expected_outcomes: DataTypes.TEXT,
     test_task: DataTypes.TEXT,
   },
