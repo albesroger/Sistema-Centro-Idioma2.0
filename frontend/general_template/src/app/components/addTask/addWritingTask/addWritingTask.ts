@@ -11,7 +11,7 @@ import { WritingTask } from '../../../interfaces/task';
 
 @Component({
   selector: 'app-add-writing-task',
-  imports: [CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './addWritingTask.html',
 })
 export class AddWritingTaskComponent implements OnInit {

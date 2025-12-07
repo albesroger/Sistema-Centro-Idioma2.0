@@ -7,12 +7,9 @@ import { ErrorsService } from '../../../services/errors.service';
 import { TaskService } from '../../../services/task.service';
 import { ListeningTask } from '../../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NavbarComponent } from '../../navbar/navbar.component';
-import { BreadcrumbComponent } from "../../breadcrumb/breadcrumb";
-
 @Component({
   selector: 'add-task',
-  imports: [CommonModule, FormsModule, NavbarComponent, BreadcrumbComponent],
+  imports: [CommonModule, FormsModule ],
   templateUrl: './addListeningTask.component.html',
 })
 export class AddListeningTaskComponent implements OnInit {
@@ -56,7 +53,7 @@ export class AddListeningTaskComponent implements OnInit {
   feedback_date: string = '';
   feedback_provided_by: string = '';
   feedback_text: string = '';
-  feedback_team: string = ''; //  ********ELIMINAR******
+  feedback_team: string = ''; 
 
   loading: boolean = false;
 

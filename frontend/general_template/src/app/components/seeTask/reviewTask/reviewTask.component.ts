@@ -11,7 +11,7 @@ import { Task } from '../../../interfaces/task';
 @Component({
   selector: 'app-review-task',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, BreadcrumbComponent, NavbarComponent],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './reviewTask.component.html',
 })
 export class ReviewTaskComponent implements OnInit {

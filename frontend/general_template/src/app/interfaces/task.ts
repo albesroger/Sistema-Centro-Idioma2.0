@@ -8,7 +8,7 @@ export interface BaseTask {
 }
 
 export interface ListeningTask extends BaseTask {
-  task_type: 'listening';
+  task_type: 'listening' ;
   text_source: string;
   where_found: string;
   authenticity: string;

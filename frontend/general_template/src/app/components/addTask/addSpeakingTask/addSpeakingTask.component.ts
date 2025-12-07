@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-speaking-task',
-  imports: [CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './addSpeakingTask.component.html',
 })
 export class AddSpeakingTaskComponent implements OnInit {
