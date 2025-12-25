@@ -92,7 +92,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 =======
     // si no hay nada, devolvemos solo Home
     if (!crumbs.length) {
-      return [{ label: 'Home', url: '/' }];
+      return [{ label: 'Home', url: 'inicioPage' }];
     }
 
     // si estamos en la Home (ruta '') → solo Home
@@ -100,7 +100,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
       crumbs.length === 1 &&
       (crumbs[0].url === '/' || crumbs[0].label.toLowerCase() === 'home')
     ) {
-      return [{ label: 'Home', url: '/' }];
+      return [{ label: 'Home', url: "inicioPage" }];
     }
 
     // si ya empieza en Home, dejarlo
@@ -110,10 +110,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     }
 
     // en cualquier otro caso, anteponer Home
-<<<<<<< HEAD
-    return [{ label: 'Home', url: homeUrl }, ...crumbs];
-=======
     return [{ label: 'Home', url: '/' }, ...crumbs];
->>>>>>> 59f1fba (add migajas)
   }
 }
