@@ -7,6 +7,7 @@ import { ChangeTaskTypeComponent } from './changeTaskType/changeTaskType.compone
 import { TaskTypeService } from '../../services/changeTaskType.service';
 import { SeeWritingTasks } from './seeWritingTasks/seeWritingTasks';
 import { SeeSpeakingTasks } from './seeSpeakingTasks/seeSpeakingTasks';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-see-task',
@@ -17,6 +18,8 @@ import { SeeSpeakingTasks } from './seeSpeakingTasks/seeSpeakingTasks';
     ChangeTaskTypeComponent,
     SeeWritingTasks,
     SeeSpeakingTasks,
+    RouterModule,
+    SeeTasksComponent,
   ],
   templateUrl: './seeTask.component.html',
 })
