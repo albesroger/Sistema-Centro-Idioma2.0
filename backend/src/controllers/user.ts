@@ -4,7 +4,7 @@ import { User } from "../models/user.js";
 import { Op } from "sequelize";
 import jwt from "jsonwebtoken";
 
-export const restgier = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   const { name, lastname, email, password, rol } = req.body;
 
   const user = await User.findOne({

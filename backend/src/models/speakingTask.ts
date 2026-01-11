@@ -14,7 +14,6 @@ export const SpeakingTask = sequelize.define(
       },
     },
     section: DataTypes.STRING,
-    task_type: DataTypes.STRING,
     main_topic_area: DataTypes.TEXT,
     nature_of_content: DataTypes.TEXT,
     expected_vocabulary: DataTypes.TEXT,

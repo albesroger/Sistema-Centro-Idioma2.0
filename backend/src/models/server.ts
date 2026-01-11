@@ -15,10 +15,8 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT || "3017";
-    this.listen();
     this.middlewares();
     this.router();
-    this.DBconnect();
   }
 
   private listen() {

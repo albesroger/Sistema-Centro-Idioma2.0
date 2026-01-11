@@ -14,7 +14,6 @@ export const WritingTask = sequelize.define(
       },
     },
     original_task_name: DataTypes.TEXT,
-    task_type: DataTypes.TEXT,
     main_topic_area: DataTypes.TEXT,
     nature_of_content: DataTypes.TEXT,
     expected_vocabulary: DataTypes.TEXT,

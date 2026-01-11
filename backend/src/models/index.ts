@@ -11,46 +11,76 @@ const setupAssociations = () => {
   Task.hasOne(SpeakingTask, {
     foreignKey: "task_id",
     as: "speaking",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
   SpeakingTask.belongsTo(Task, {
     foreignKey: "task_id",
     as: "task",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
 
   Task.hasOne(ListeningTask, {
     foreignKey: "task_id",
     as: "listening",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
   ListeningTask.belongsTo(Task, {
     foreignKey: "task_id",
     as: "task",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
 
   Task.hasOne(ReadingTask, {
     foreignKey: "task_id",
     as: "reading",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
   ReadingTask.belongsTo(Task, {
     foreignKey: "task_id",
     as: "task",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
 
   Task.hasOne(WritingTask, {
     foreignKey: "task_id",
     as: "writing",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
   WritingTask.belongsTo(Task, {
     foreignKey: "task_id",
     as: "task",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
 
   Task.hasMany(Notification, {
     foreignKey: "task_id",
     as: "notifications",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
   Notification.belongsTo(Task, {
     foreignKey: "task_id",
     as: "task",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    constraints: true,
   });
 
   console.log("All associations have been set up successfully.");
