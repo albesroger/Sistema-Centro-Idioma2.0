@@ -39,7 +39,7 @@ const getUserFromToken = async (req: Request) => {
   const token = headerToken.slice(7);
   const decoded: any = jwt.verify(
     token,
-    process.env.SECRET_KEY || "Jdz237797TH1dp7zjFzM"
+    process.env.SECRET_KEY || "Jdz237797TH1dp7zjFzM",
   );
 
   const user = await User.findOne({ where: { email: decoded.email } });
@@ -49,7 +49,7 @@ const getUserFromToken = async (req: Request) => {
 const createNotificationsForTask = async (
   task: Task,
   senderName: string | null,
-  transaction: any
+  transaction: any,
 ) => {
   const recipients = await User.findAll({
     where: { rol: { [Op.in]: TARGET_ROLES } },
@@ -82,17 +82,19 @@ export default {
         req.body;
 
       if (task_id) {
-        const existingTask = await Task.findOne({ where: { task_id }, transaction });
+        const existingTask = await Task.findOne({
+          where: { task_id },
+          transaction,
+        });
         if (existingTask) {
           return res.status(400).json({ error: "task_id ya existe" });
         }
       }
 
       const currentUser = await getUserFromToken(req);
-      const senderName =
-        currentUser?.get
-          ? `${currentUser.get("name")} ${currentUser.get("lastname")}`
-          : name_of_item_writer ?? null;
+      const senderName = currentUser?.get
+        ? `${currentUser.get("name")} ${currentUser.get("lastname")}`
+        : (name_of_item_writer ?? null);
 
       // Crear Task base
       const task = await Task.create(
@@ -104,7 +106,7 @@ export default {
           date,
           status,
         },
-        { transaction }
+        { transaction },
       );
 
       // Crear subtipo según task_type
@@ -119,7 +121,7 @@ export default {
               feedback_date: null,
               feedback_text: null,
             },
-            { transaction }
+            { transaction },
           );
           break;
         case "speaking":
@@ -132,7 +134,7 @@ export default {
               feedback_date: null,
               feedback_text: null,
             },
-            { transaction }
+            { transaction },
           );
           break;
         case "reading":
@@ -145,7 +147,7 @@ export default {
               feedback_date: null,
               feedback_text: null,
             },
-            { transaction }
+            { transaction },
           );
           break;
         case "writing":
@@ -158,7 +160,7 @@ export default {
               feedback_date: null,
               feedback_text: null,
             },
-            { transaction }
+            { transaction },
           );
           break;
         default:
@@ -248,7 +250,7 @@ export default {
       const taskModel = getModelTask(normalizedType as TaskType);
       if (!taskModel) {
         console.error(
-          `❌ No se pudo encontrar el modelo para: ${normalizedType}`
+          `❌ No se pudo encontrar el modelo para: ${normalizedType}`,
         );
         return res.status(500).json({
           error: "Error interno del servidor",
@@ -282,7 +284,7 @@ export default {
       });
 
       console.log(
-        `✅ Se encontraron ${tasks.length} tareas de tipo ${normalizedType}`
+        `✅ Se encontraron ${tasks.length} tareas de tipo ${normalizedType}`,
       );
       return res.json(tasks);
     } catch (error) {
@@ -351,25 +353,80 @@ export default {
       const task = await Task.findByPk(id);
       if (!task) return res.status(404).json({ error: "Tarea no encontrada" });
 
+      const resolvedTaskType = String(task_type ?? task.get("task_type") ?? "")
+        .toLowerCase()
+        .trim();
+      const resolvedTaskId = String(task.get("task_id"));
+
       await task.update({
         name_of_item_writer: data.name_of_item_writer,
         team: data.team,
         date: data.date,
+        status: data.status,
       });
 
-      switch (task_type) {
+      const listeningPayload = {
+        text_source: data.text_source,
+        where_found: data.where_found,
+        authenticity: data.authenticity,
+        text_input_type: data.text_input_type,
+        discourse_type: data.discourse_type,
+        main_topic_area: data.main_topic_area,
+        nature_of_content: data.nature_of_content,
+        vocabulary: data.vocabulary,
+        grammar: data.grammar,
+        length_of_input: data.length_of_input,
+        number_of_participants: data.number_of_participants,
+        accents: data.accents,
+        speed_of_delivery: data.speed_of_delivery,
+        clarity_of_articulation: data.clarity_of_articulation,
+        comprehensible_cefr_level: data.comprehensible_cefr_level,
+        item_characteristics: data.item_characteristics,
+        time_to_do_total_task_minutes: data.time_to_do_total_task_minutes,
+        task_level_estimated: data.task_level_estimated,
+        test_task: data.test_task,
+        answer_key: data.answer_key,
+        comments: data.comments,
+        feedback_provided_by: data.feedback_provided_by,
+        feedback_team: data.feedback_team,
+        feedback_date: data.feedback_date || null,
+        feedback_text: data.feedback_text,
+      };
+
+      switch (resolvedTaskType) {
         case "speaking":
-          await SpeakingTask.update(data, { where: { task_id: id } });
+          await SpeakingTask.update(data, {
+            where: { task_id: resolvedTaskId },
+          });
           break;
         case "listening":
-          await ListeningTask.update(data, { where: { task_id: id } });
+          const [updatedListeningRows] = await ListeningTask.update(
+            listeningPayload,
+            {
+              where: { task_id: resolvedTaskId },
+            },
+          );
+
+          if (!updatedListeningRows) {
+            await ListeningTask.create({
+              task_id: resolvedTaskId,
+              ...listeningPayload,
+            });
+          }
+
           break;
         case "reading":
-          await ReadingTask.update(data, { where: { task_id: id } });
+          await ReadingTask.update(data, {
+            where: { task_id: resolvedTaskId },
+          });
           break;
         case "writing":
-          await WritingTask.update(data, { where: { task_id: id } });
+          await WritingTask.update(data, {
+            where: { task_id: resolvedTaskId },
+          });
           break;
+        default:
+          return res.status(400).json({ error: "Tipo de tarea no válido" });
       }
 
       return res.json({ message: "Tarea actualizada correctamente" });

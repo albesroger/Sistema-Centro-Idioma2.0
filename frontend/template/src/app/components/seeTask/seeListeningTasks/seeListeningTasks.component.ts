@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ListeningTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,7 +8,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-see-listeningtasks',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './seeListeningTasks.component.html',
 })
 export class SeeTasksComponent implements OnInit {
@@ -16,10 +18,12 @@ export class SeeTasksComponent implements OnInit {
   // ⭐ NUEVO: selección múltiple
   selectedItems: ListeningTask[] = [];
   allSelected = false;
+  isEditing = false;
+  editingTask: ListeningTask | null = null;
 
   constructor(
     private _taskService: TaskService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -38,8 +42,8 @@ export class SeeTasksComponent implements OnInit {
               ...listeningData,
               date: String(value.date).slice(0, 10),
             };
-          })
-        )
+          }),
+        ),
       )
       .subscribe((data) => {
         this.listTasks = data;
@@ -55,6 +59,38 @@ export class SeeTasksComponent implements OnInit {
         this.toastr.success('Task eliminada');
       },
       error: () => this.toastr.error('Error al eliminar Task'),
+    });
+  }
+
+  startEdit(item: ListeningTask) {
+    this.editingTask = { ...item };
+    this.isEditing = true;
+  }
+
+  cancelEdit() {
+    this.editingTask = null;
+    this.isEditing = false;
+  }
+
+  saveEdit() {
+    if (!this.editingTask) return;
+
+    const payload: ListeningTask = {
+      ...this.editingTask,
+      date:
+        typeof this.editingTask.date === 'string'
+          ? this.editingTask.date.slice(0, 10)
+          : String(this.editingTask.date).slice(0, 10),
+      task_type: 'listening',
+    };
+
+    this._taskService.updateTask(payload).subscribe({
+      next: () => {
+        this.toastr.success('Task actualizada');
+        this.cancelEdit();
+        this.getListeningTasks();
+      },
+      error: () => this.toastr.error('Error al actualizar Task'),
     });
   }
 
