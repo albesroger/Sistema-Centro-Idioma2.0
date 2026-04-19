@@ -36,3 +36,5 @@ yarn.lock
 # Archivos temporales
 *.tmp
 *~
+
+coverage/
