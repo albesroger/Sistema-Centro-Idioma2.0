@@ -4,10 +4,11 @@ import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-see-reading-tasks',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './seeReadingTasks.component.html',
 })
 export class SeeReadingTasks implements OnInit {
@@ -15,6 +16,8 @@ export class SeeReadingTasks implements OnInit {
 
   selectedItems: ReadingTask[] = [];
   allSelected = false;
+  isEditing = false;
+  editingTask: ReadingTask | null = null;
 
   constructor(
     private _taskService: TaskService,
@@ -58,6 +61,38 @@ export class SeeReadingTasks implements OnInit {
       },
     });
     this.getReadingTasks();
+  }
+
+  startEdit(item: ReadingTask) {
+    this.editingTask = { ...item };
+    this.isEditing = true;
+  }
+
+  cancelEdit() {
+    this.editingTask = null;
+    this.isEditing = false;
+  }
+
+  saveEdit() {
+    if (!this.editingTask) return;
+
+    const payload: ReadingTask = {
+      ...this.editingTask,
+      date:
+        typeof this.editingTask.date === 'string'
+          ? this.editingTask.date.slice(0, 10)
+          : String(this.editingTask.date).slice(0, 10),
+      task_type: 'reading',
+    };
+
+    this._taskService.updateTask(payload).subscribe({
+      next: () => {
+        this.toastr.success('Task actualizada');
+        this.cancelEdit();
+        this.getReadingTasks();
+      },
+      error: () => this.toastr.error('Error al actualizar Task'),
+    });
   }
 
   // ⭐ NUEVO: manejar selección individual

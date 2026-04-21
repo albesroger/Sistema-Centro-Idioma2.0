@@ -407,8 +407,9 @@ export default {
 
           break;
         case "reading":
-          await ReadingTask.update(data, {
-            where: { task_id: resolvedTaskId },
+          await ReadingTask.upsert({
+            task_id: resolvedTaskId,
+            ...data,
           });
           break;
         case "writing":
