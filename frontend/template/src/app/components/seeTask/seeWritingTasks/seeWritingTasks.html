@@ -87,12 +87,16 @@
           class="block text-sm font-medium text-gray-700 dark:text-gray-200"
           >Status</label
         >
-        <input
+        <select
           class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
-          type="text"
-          [(ngModel)]="editingTask.status"
           name="status"
-        />
+          id=""
+          [(ngModel)]="editingTask.status"
+        >
+          <option value="pendiente">Pendiente</option>
+          <option value="rechazada">Rechazada</option>
+          <option value="aprobada">Aprobada</option>
+        </select>
       </div>
       <div>
         <label
