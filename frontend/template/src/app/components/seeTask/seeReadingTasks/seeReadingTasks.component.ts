@@ -21,7 +21,7 @@ export class SeeReadingTasks implements OnInit {
 
   constructor(
     private _taskService: TaskService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -40,8 +40,8 @@ export class SeeReadingTasks implements OnInit {
               ...readingData,
               date: String(value.date).slice(0, 10),
             };
-          })
-        )
+          }),
+        ),
       )
       .subscribe((data) => {
         this.listTasks = data;

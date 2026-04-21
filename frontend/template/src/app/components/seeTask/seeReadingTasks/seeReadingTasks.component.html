@@ -1,161 +1,403 @@
 <div class="w-full">
   @if (isEditing && editingTask) {
-    <div class="mb-6 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <div
+      class="mb-6 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+    >
       <div class="flex items-center justify-between gap-4 mb-4">
         <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
           Editar Reading Task #{{ editingTask.task_id }}
         </h3>
-        <button type="button" class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white" (click)="cancelEdit()">
+        <button
+          type="button"
+          class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
+          (click)="cancelEdit()"
+        >
           Cancelar
         </button>
       </div>
 
-      <form class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" (ngSubmit)="saveEdit()">
+      <form
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+        (ngSubmit)="saveEdit()"
+      >
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">ID</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="number" [ngModel]="editingTask.task_id" name="task_id" readonly />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >ID</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="number"
+            [ngModel]="editingTask.task_id"
+            name="task_id"
+            readonly
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Task Type</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [ngModel]="editingTask.task_type" name="task_type" readonly />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Task Type</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [ngModel]="editingTask.task_type"
+            name="task_type"
+            readonly
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Team</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.team" name="team" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Team</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.team"
+            name="team"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Date</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="date" [(ngModel)]="editingTask.date" name="date" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Date</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="date"
+            [(ngModel)]="editingTask.date"
+            name="date"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Name of Item Writer</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.name_of_item_writer" name="name_of_item_writer" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Name of Item Writer</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.name_of_item_writer"
+            name="name_of_item_writer"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.status" name="status" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Status</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.status"
+            name="status"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Text Source</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.text_source" name="text_source" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Text Source</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.text_source"
+            name="text_source"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Where Found</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.where_found" name="where_found" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Where Found</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.where_found"
+            name="where_found"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Authenticity</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.authenticity" name="authenticity" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Authenticity</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.authenticity"
+            name="authenticity"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Text Type</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.text_type" name="text_type" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Text Type</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.text_type"
+            name="text_type"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Form</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.form" name="form" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Form</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.form"
+            name="form"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Discourse Type</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.discourse_type" name="discourse_type" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Discourse Type</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.discourse_type"
+            name="discourse_type"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Main Topic Area</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.main_topic_area" name="main_topic_area" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Main Topic Area</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.main_topic_area"
+            name="main_topic_area"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nature of Content</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.nature_of_content" name="nature_of_content" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Nature of Content</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.nature_of_content"
+            name="nature_of_content"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Vocabulary</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.vocabulary" name="vocabulary" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Vocabulary</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.vocabulary"
+            name="vocabulary"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Grammar</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.grammar" name="grammar" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Grammar</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.grammar"
+            name="grammar"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Number of Words</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="number" [(ngModel)]="editingTask.number_of_words" name="number_of_words" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Number of Words</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="number"
+            [(ngModel)]="editingTask.number_of_words"
+            name="number_of_words"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Comprehensible CEFR Level</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.comprehensible_cefr_level" name="comprehensible_cefr_level" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Comprehensible CEFR Level</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.comprehensible_cefr_level"
+            name="comprehensible_cefr_level"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Item Characteristics</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.item_characteristics" name="item_characteristics" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Item Characteristics</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.item_characteristics"
+            name="item_characteristics"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Time to Do Total Task (minutes)</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="number" [(ngModel)]="editingTask.time_to_do_total_task_minutes" name="time_to_do_total_task_minutes" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Time to Do Total Task (minutes)</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="number"
+            [(ngModel)]="editingTask.time_to_do_total_task_minutes"
+            name="time_to_do_total_task_minutes"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Task Level Estimated</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.task_level_estimated" name="task_level_estimated" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Task Level Estimated</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.task_level_estimated"
+            name="task_level_estimated"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Test Task</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.test_task" name="test_task" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Test Task</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.test_task"
+            name="test_task"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Answer Key</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.answer_key" name="answer_key" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Answer Key</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.answer_key"
+            name="answer_key"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Comments</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.comments" name="comments" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Comments</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.comments"
+            name="comments"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Feedback Provided By</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.feedback_provided_by" name="feedback_provided_by" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Feedback Provided By</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.feedback_provided_by"
+            name="feedback_provided_by"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Feedback Team</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="text" [(ngModel)]="editingTask.feedback_team" name="feedback_team" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Feedback Team</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="text"
+            [(ngModel)]="editingTask.feedback_team"
+            name="feedback_team"
+          />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Feedback Date</label>
-          <input class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" type="date" [(ngModel)]="editingTask.feedback_date" name="feedback_date" />
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Feedback Date</label
+          >
+          <input
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            type="date"
+            [(ngModel)]="editingTask.feedback_date"
+            name="feedback_date"
+          />
         </div>
 
         <div class="md:col-span-2 lg:col-span-3">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Feedback Text</label>
-          <textarea class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700" rows="3" [(ngModel)]="editingTask.feedback_text" name="feedback_text"></textarea>
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >Feedback Text</label
+          >
+          <textarea
+            class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+            rows="3"
+            [(ngModel)]="editingTask.feedback_text"
+            name="feedback_text"
+          ></textarea>
         </div>
 
         <div class="md:col-span-2 lg:col-span-3 flex justify-end gap-2 pt-2">
-          <button type="button" class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700" (click)="cancelEdit()">
+          <button
+            type="button"
+            class="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+            (click)="cancelEdit()"
+          >
             Cancelar
           </button>
-          <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+          <button
+            type="submit"
+            class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          >
             Guardar cambios
           </button>
         </div>
@@ -165,9 +407,22 @@
 
   @if (!isEditing) {
     <div class="w-full flex justify-end mb-1">
-      <button type="button" class="flex items-center mr-3 gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-800 transition-colors duration-200 text-sm sm:text-base" [disabled]="selectedItems.length === 0" (click)="deleteSelected()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20">
-          <path fill="currentColor" d="m9.129 0l1.974.005c.778.094 1.46.46 2.022 1.078c.459.504.7 1.09.714 1.728h5.475a.69.69 0 0 1 .686.693a.689.689 0 0 1-.686.692l-1.836-.001v11.627c0 2.543-.949 4.178-3.041 4.178H5.419c-2.092 0-3.026-1.626-3.026-4.178V4.195H.686A.689.689 0 0 1 0 3.505c0-.383.307-.692.686-.692h5.47c.014-.514.205-1.035.554-1.55C7.23.495 8.042.074 9.129 0Zm6.977 4.195H3.764v11.627c0 1.888.52 2.794 1.655 2.794h9.018c1.139 0 1.67-.914 1.67-2.794l-.001-11.627ZM6.716 6.34c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.726 0c.38 0 .686.31.686.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.728 0c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.685.692a.689.689 0 0 1-.686-.692v-8.05a.69.69 0 0 1 .686-.692ZM9.176 1.382c-.642.045-1.065.264-1.334.662c-.198.291-.297.543-.313.768l4.938-.001c-.014-.291-.129-.547-.352-.792c-.346-.38-.73-.586-1.093-.635l-1.846-.002Z" />
+      <button
+        type="button"
+        class="flex items-center mr-3 gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-800 transition-colors duration-200 text-sm sm:text-base"
+        [disabled]="selectedItems.length === 0"
+        (click)="deleteSelected()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill="currentColor"
+            d="m9.129 0l1.974.005c.778.094 1.46.46 2.022 1.078c.459.504.7 1.09.714 1.728h5.475a.69.69 0 0 1 .686.693a.689.689 0 0 1-.686.692l-1.836-.001v11.627c0 2.543-.949 4.178-3.041 4.178H5.419c-2.092 0-3.026-1.626-3.026-4.178V4.195H.686A.689.689 0 0 1 0 3.505c0-.383.307-.692.686-.692h5.47c.014-.514.205-1.035.554-1.55C7.23.495 8.042.074 9.129 0Zm6.977 4.195H3.764v11.627c0 1.888.52 2.794 1.655 2.794h9.018c1.139 0 1.67-.914 1.67-2.794l-.001-11.627ZM6.716 6.34c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.726 0c.38 0 .686.31.686.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.728 0c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.685.692a.689.689 0 0 1-.686-.692v-8.05a.69.69 0 0 1 .686-.692ZM9.176 1.382c-.642.045-1.065.264-1.334.662c-.198.291-.297.543-.313.768l4.938-.001c-.014-.291-.129-.547-.352-.792c-.346-.38-.73-.586-1.093-.635l-1.846-.002Z"
+          />
         </svg>
         Eliminar
       </button>
@@ -177,58 +432,178 @@
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
         <thead class="bg-gray-100 dark:bg-gray-700">
           <tr>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">#</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">ID</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Task Type</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Team</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Date</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Name of Item Writer</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Number of Words</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Status</th>
-            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap">Actions</th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              #
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              ID
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Task Type
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Team
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Date
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Name of Item Writer
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Number of Words
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Status
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-100 uppercase tracking-wider whitespace-nowrap"
+            >
+              Actions
+            </th>
             <th class="px-6 py-3 text-center">
-              <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allSelected" />
+              <input
+                type="checkbox"
+                (change)="toggleSelectAll($event)"
+                [checked]="allSelected"
+              />
             </th>
           </tr>
         </thead>
 
-        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+        <tbody
+          class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600"
+        >
           @for (item of listTasks; track $index) {
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ $index + 1 }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ item.task_id }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ item.task_type }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ item.team }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ item.date }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ item.name_of_item_writer }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center">{{ item.number_of_words }}</td>
-            <td class="px-2 py-4 whitespace-nowrap text-sm text-center w-12">
-              <p class="flex justify-center rounded-2xl px-1" [ngClass]="item.status === 'aprobada' ? 'bg-green-200 text-green-700' : item.status === 'pendiente' ? 'bg-yellow-200 text-yellow-700' : item.status === 'rechazada' ? 'bg-red-200 text-red-700' : 'bg-gray-200 text-gray-700'">
-                {{ item.status }}
-              </p>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
-              <div class="flex justify-center gap-2">
-                <button type="button" class="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 mr-2 sm:mr-4 transition-colors duration-200 text-sm sm:text-base" (click)="startEdit(item)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 1025 1023">
-                    <path fill="currentColor" d="M896.428 1023h-768q-53 0-90.5-37.5T.428 895V127q0-53 37.5-90t90.5-37h576l-128 127h-384q-27 0-45.5 19t-18.5 45v640q0 27 19 45.5t45 18.5h640q27 0 45.5-18.5t18.5-45.5V447l128-128v576q0 53-37.5 90.5t-90.5 37.5zm-576-464l144 144l-208 64zm208 96l-160-159l479-480q17-16 40.5-16t40.5 16l79 80q16 16 16.5 39.5t-16.5 40.5z" />
-                  </svg>
-                  Editar
-                </button>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ $index + 1 }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ item.task_id }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ item.task_type }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ item.team }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ item.date }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ item.name_of_item_writer }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-center"
+              >
+                {{ item.number_of_words }}
+              </td>
+              <td class="px-2 py-4 whitespace-nowrap text-sm text-center w-12">
+                <p
+                  class="flex justify-center rounded-2xl px-1"
+                  [ngClass]="
+                    item.status === 'aprobada'
+                      ? 'bg-green-200 text-green-700'
+                      : item.status === 'pendiente'
+                        ? 'bg-yellow-200 text-yellow-700'
+                        : item.status === 'rechazada'
+                          ? 'bg-red-200 text-red-700'
+                          : 'bg-gray-200 text-gray-700'
+                  "
+                >
+                  {{ item.status }}
+                </p>
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center"
+              >
+                <div class="flex justify-center gap-2">
+                  <button
+                    type="button"
+                    class="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 mr-2 sm:mr-4 transition-colors duration-200 text-sm sm:text-base"
+                    (click)="startEdit(item)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 1025 1023"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M896.428 1023h-768q-53 0-90.5-37.5T.428 895V127q0-53 37.5-90t90.5-37h576l-128 127h-384q-27 0-45.5 19t-18.5 45v640q0 27 19 45.5t45 18.5h640q27 0 45.5-18.5t18.5-45.5V447l128-128v576q0 53-37.5 90.5t-90.5 37.5zm-576-464l144 144l-208 64zm208 96l-160-159l479-480q17-16 40.5-16t40.5 16l79 80q16 16 16.5 39.5t-16.5 40.5z"
+                      />
+                    </svg>
+                    Editar
+                  </button>
 
-                <button type="button" class="flex items-center gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200 text-sm sm:text-base" (click)="deleteTask(item.task_id)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20">
-                    <path fill="currentColor" d="m9.129 0l1.974.005c.778.094 1.46.46 2.022 1.078c.459.504.7 1.09.714 1.728h5.475a.69.69 0 0 1 .686.693a.689.689 0 0 1-.686.692l-1.836-.001v11.627c0 2.543-.949 4.178-3.041 4.178H5.419c-2.092 0-3.026-1.626-3.026-4.178V4.195H.686A.689.689 0 0 1 0 3.505c0-.383.307-.692.686-.692h5.47c.014-.514.205-1.035.554-1.55C7.23.495 8.042.074 9.129 0Zm6.977 4.195H3.764v11.627c0 1.888.52 2.794 1.655 2.794h9.018c1.139 0 1.67-.914 1.67-2.794l-.001-11.627ZM6.716 6.34c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.726 0c.38 0 .686.31.686.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.728 0c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.685.692a.689.689 0 0 1-.686-.692v-8.05a.69.69 0 0 1 .686-.692ZM9.176 1.382c-.642.045-1.065.264-1.334.662c-.198.291-.297.543-.313.768l4.938-.001c-.014-.291-.129-.547-.352-.792c-.346-.38-.73-.586-1.093-.635l-1.846-.002Z" />
-                  </svg>
-                  Eliminar
-                </button>
-              </div>
-            </td>
+                  <button
+                    type="button"
+                    class="flex items-center gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200 text-sm sm:text-base"
+                    (click)="deleteTask(item.task_id)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="m9.129 0l1.974.005c.778.094 1.46.46 2.022 1.078c.459.504.7 1.09.714 1.728h5.475a.69.69 0 0 1 .686.693a.689.689 0 0 1-.686.692l-1.836-.001v11.627c0 2.543-.949 4.178-3.041 4.178H5.419c-2.092 0-3.026-1.626-3.026-4.178V4.195H.686A.689.689 0 0 1 0 3.505c0-.383.307-.692.686-.692h5.47c.014-.514.205-1.035.554-1.55C7.23.495 8.042.074 9.129 0Zm6.977 4.195H3.764v11.627c0 1.888.52 2.794 1.655 2.794h9.018c1.139 0 1.67-.914 1.67-2.794l-.001-11.627ZM6.716 6.34c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.726 0c.38 0 .686.31.686.692v8.05a.689.689 0 0 1-.686.692a.689.689 0 0 1-.685-.692v-8.05c0-.382.307-.692.685-.692Zm2.728 0c.378 0 .685.31.685.692v8.05a.689.689 0 0 1-.685.692a.689.689 0 0 1-.686-.692v-8.05a.69.69 0 0 1 .686-.692ZM9.176 1.382c-.642.045-1.065.264-1.334.662c-.198.291-.297.543-.313.768l4.938-.001c-.014-.291-.129-.547-.352-.792c-.346-.38-.73-.586-1.093-.635l-1.846-.002Z"
+                      />
+                    </svg>
+                    Eliminar
+                  </button>
+                </div>
+              </td>
 
-            <td class="px-6 py-4 text-center">
-              <input type="checkbox" (change)="toggleSelection(item)" [checked]="selectedItems.includes(item)" />
-            </td>
-          </tr>
+              <td class="px-6 py-4 text-center">
+                <input
+                  type="checkbox"
+                  (change)="toggleSelection(item)"
+                  [checked]="selectedItems.includes(item)"
+                />
+              </td>
+            </tr>
           }
         </tbody>
       </table>
