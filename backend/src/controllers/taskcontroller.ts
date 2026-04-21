@@ -400,19 +400,10 @@ export default {
           });
           break;
         case "listening":
-          const [updatedListeningRows] = await ListeningTask.update(
-            listeningPayload,
-            {
-              where: { task_id: resolvedTaskId },
-            },
-          );
-
-          if (!updatedListeningRows) {
-            await ListeningTask.create({
-              task_id: resolvedTaskId,
-              ...listeningPayload,
-            });
-          }
+          await ListeningTask.upsert({
+            task_id: resolvedTaskId,
+            ...listeningPayload,
+          });
 
           break;
         case "reading":
