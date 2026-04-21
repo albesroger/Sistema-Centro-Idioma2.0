@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 export class CurrentUsersComponent {
   listUser: User[] = [];
 
+  private readonly defaultPassword = 'Cambio123*';
+
   name?: string = '';
   lastname?: string = '';
   email: string = '';
@@ -22,7 +24,7 @@ export class CurrentUsersComponent {
 
   constructor(
     private _userService: UserServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export class CurrentUsersComponent {
         lastname: this.lastname,
         email: this.email,
         rol: this.rol || 'profesor',
-        password: this.password,
+        password: this.defaultPassword,
       };
 
       this._userService.signIn(user).subscribe({
@@ -114,6 +116,7 @@ export class CurrentUsersComponent {
     this.name = '';
     this.lastname = '';
     this.email = '';
+    this.password = '';
     this.rol = '';
     this.userEditing = null;
   }

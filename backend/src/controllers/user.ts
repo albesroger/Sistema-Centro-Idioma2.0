@@ -17,7 +17,12 @@ export const register = async (req: Request, res: Response) => {
     });
   }
 
-  const passwordHash = await bcrypt.hash(password, 10);
+  const rawPassword =
+    typeof password === "string" && password.trim().length > 0
+      ? password
+      : process.env.DEFAULT_USER_PASSWORD || "Cambio123*";
+
+  const passwordHash = await bcrypt.hash(rawPassword, 10);
 
   try {
     await User.create({
@@ -59,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
 
   const token = jwt.sign(
     { email: email },
-    process.env.SECRET_KEY || `Jdz237797TH1dp7zjFzM`
+    process.env.SECRET_KEY || `Jdz237797TH1dp7zjFzM`,
     //{ expiresIn: "100000" }
   );
 
@@ -90,7 +95,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
     const [updated] = await User.update(
       { name, lastname, email, rol },
-      { where: { id } }
+      { where: { id } },
     );
 
     if (updated) {
@@ -130,7 +135,7 @@ export const loadUser = async (req: Request, res: Response) => {
     // 2. Verificar y decodificar el token
     const decoded: any = jwt.verify(
       token,
-      process.env.SECRET_KEY || "Jdz237797TH1dp7zjFzM"
+      process.env.SECRET_KEY || "Jdz237797TH1dp7zjFzM",
     );
 
     // 3. Buscar al usuario por el email del token
