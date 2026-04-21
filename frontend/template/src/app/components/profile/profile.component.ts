@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
   newPassword = '';
   confirmNewPassword = '';
   changingPassword = false;
+  showPasswordModal = false;
 
   constructor(
     private _userService: UserServiceService,
@@ -135,9 +136,8 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: () => {
           this.toastr.success('Contraseña actualizada correctamente');
-          this.currentPassword = '';
-          this.newPassword = '';
-          this.confirmNewPassword = '';
+          this.resetPasswordForm();
+          this.closePasswordModal();
           this.changingPassword = false;
         },
         error: (err) => {
@@ -146,5 +146,20 @@ export class ProfileComponent implements OnInit {
           this.changingPassword = false;
         },
       });
+  }
+
+  openPasswordModal(): void {
+    this.showPasswordModal = true;
+  }
+
+  closePasswordModal(): void {
+    this.showPasswordModal = false;
+    this.resetPasswordForm();
+  }
+
+  resetPasswordForm(): void {
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmNewPassword = '';
   }
 }
