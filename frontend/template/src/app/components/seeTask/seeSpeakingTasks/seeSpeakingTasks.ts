@@ -4,10 +4,11 @@ import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-see-speaking-tasks',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './seeSpeakingTasks.html',
 })
 export class SeeSpeakingTasks implements OnInit {
@@ -15,10 +16,12 @@ export class SeeSpeakingTasks implements OnInit {
 
   selectedItems: SpeakingTask[] = [];
   allSelected = false;
+  isEditing = false;
+  editingTask: SpeakingTask | null = null;
 
   constructor(
     private _taskService: TaskService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +40,8 @@ export class SeeSpeakingTasks implements OnInit {
               ...speakingData,
               date: String(value.date).slice(0, 10),
             };
-          })
-        )
+          }),
+        ),
       )
       .subscribe((data) => {
         this.listTasks = data;
@@ -58,6 +61,38 @@ export class SeeSpeakingTasks implements OnInit {
       },
     });
     this.getSpeakingTasks();
+  }
+
+  startEdit(item: SpeakingTask) {
+    this.editingTask = { ...item };
+    this.isEditing = true;
+  }
+
+  cancelEdit() {
+    this.editingTask = null;
+    this.isEditing = false;
+  }
+
+  saveEdit() {
+    if (!this.editingTask) return;
+
+    const payload: SpeakingTask = {
+      ...this.editingTask,
+      date:
+        typeof this.editingTask.date === 'string'
+          ? this.editingTask.date.slice(0, 10)
+          : String(this.editingTask.date).slice(0, 10),
+      task_type: 'speaking',
+    };
+
+    this._taskService.updateTask(payload).subscribe({
+      next: () => {
+        this.toastr.success('Task actualizada');
+        this.cancelEdit();
+        this.getSpeakingTasks();
+      },
+      error: () => this.toastr.error('Error al actualizar Task'),
+    });
   }
 
   toggleSelection(item: SpeakingTask) {

@@ -395,8 +395,9 @@ export default {
 
       switch (resolvedTaskType) {
         case "speaking":
-          await SpeakingTask.update(data, {
-            where: { task_id: resolvedTaskId },
+          await SpeakingTask.upsert({
+            task_id: resolvedTaskId,
+            ...data,
           });
           break;
         case "listening":
