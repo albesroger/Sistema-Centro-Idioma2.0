@@ -414,8 +414,9 @@ export default {
           });
           break;
         case "writing":
-          await WritingTask.update(data, {
-            where: { task_id: resolvedTaskId },
+          await WritingTask.upsert({
+            task_id: resolvedTaskId,
+            ...data,
           });
           break;
         default:

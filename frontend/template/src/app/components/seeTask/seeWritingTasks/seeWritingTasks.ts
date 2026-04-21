@@ -4,10 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { WritingTask } from '../../../interfaces/task';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-see-writing-tasks',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './seeWritingTasks.html',
 })
 export class SeeWritingTasks implements OnInit {
@@ -15,10 +16,12 @@ export class SeeWritingTasks implements OnInit {
 
   selectedItems: WritingTask[] = [];
   allSelected = false;
+  isEditing = false;
+  editingTask: WritingTask | null = null;
 
   constructor(
     private _taskService: TaskService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +40,8 @@ export class SeeWritingTasks implements OnInit {
               ...writingData,
               date: String(value.date).slice(0, 10),
             };
-          })
-        )
+          }),
+        ),
       )
       .subscribe((data) => {
         this.listTasks = data;
@@ -58,6 +61,38 @@ export class SeeWritingTasks implements OnInit {
       },
     });
     this.getWritingTasks();
+  }
+
+  startEdit(item: WritingTask) {
+    this.editingTask = { ...item };
+    this.isEditing = true;
+  }
+
+  cancelEdit() {
+    this.editingTask = null;
+    this.isEditing = false;
+  }
+
+  saveEdit() {
+    if (!this.editingTask) return;
+
+    const payload: WritingTask = {
+      ...this.editingTask,
+      date:
+        typeof this.editingTask.date === 'string'
+          ? this.editingTask.date.slice(0, 10)
+          : String(this.editingTask.date).slice(0, 10),
+      task_type: 'writing',
+    };
+
+    this._taskService.updateTask(payload).subscribe({
+      next: () => {
+        this.toastr.success('Task actualizada');
+        this.cancelEdit();
+        this.getWritingTasks();
+      },
+      error: () => this.toastr.error('Error al actualizar Task'),
+    });
   }
 
   // ⭐ NUEVO: manejar selección individual
