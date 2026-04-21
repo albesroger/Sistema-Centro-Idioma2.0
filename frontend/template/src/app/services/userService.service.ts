@@ -39,13 +39,13 @@ export class UserServiceService {
   updateUser(user: User): Observable<any> {
     const token = localStorage.getItem('myToken');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-    
+
     return this.http.put(
-      `${this.AppUrl}${this.APIUrl}/updateUser/${user.id}`,  
+      `${this.AppUrl}${this.APIUrl}/updateUser/${user.id}`,
       user,
-      { headers }
+      { headers },
     );
   }
 
@@ -54,7 +54,7 @@ export class UserServiceService {
 
     if (!token) {
       return throwError(
-        () => new Error('No se encontró token de autenticación')
+        () => new Error('No se encontró token de autenticación'),
       );
     }
 
@@ -67,7 +67,7 @@ export class UserServiceService {
         `${this.AppUrl}${this.APIUrl}/loadUser`,
         {
           headers,
-        }
+        },
       )
       .pipe(
         tap(() => {}),
@@ -79,7 +79,30 @@ export class UserServiceService {
         }),
         catchError((error) => {
           return throwError(() => error);
-        })
+        }),
       );
+  }
+
+  changePassword(
+    currentPassword: string,
+    newPassword: string,
+  ): Observable<any> {
+    const token = localStorage.getItem('myToken');
+
+    if (!token) {
+      return throwError(
+        () => new Error('No se encontró token de autenticación'),
+      );
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.put(
+      `${this.AppUrl}${this.APIUrl}/changePassword`,
+      { currentPassword, newPassword },
+      { headers },
+    );
   }
 }

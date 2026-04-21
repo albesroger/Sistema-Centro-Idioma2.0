@@ -7,11 +7,19 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Task } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { map } from 'rxjs';
-import { BreadcrumbComponent } from "../breadcrumb/breadcrumb";
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
-  imports: [TitleCasePipe, UpperCasePipe, NavbarComponent, BreadcrumbComponent],
+  imports: [
+    TitleCasePipe,
+    UpperCasePipe,
+    NavbarComponent,
+    BreadcrumbComponent,
+    FormsModule,
+  ],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
@@ -19,11 +27,16 @@ export class ProfileComponent implements OnInit {
   loading = true;
   error: string | null = null;
   taskForUser: Task[] = [];
+  currentPassword = '';
+  newPassword = '';
+  confirmNewPassword = '';
+  changingPassword = false;
 
   constructor(
     private _userService: UserServiceService,
     private location: Location,
-    private _taskService: TaskService
+    private _taskService: TaskService,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +65,7 @@ export class ProfileComponent implements OnInit {
 
   private loadTasksForUser(user: User): void {
     const identifierParts = [user.name, user.lastname].filter(
-      (value) => !!value
+      (value) => !!value,
     );
     let identifier = identifierParts.join(' ').trim();
 
@@ -76,8 +89,8 @@ export class ProfileComponent implements OnInit {
               Data,
               date: String(value.date).slice(0, 10),
             };
-          })
-        )
+          }),
+        ),
       )
       .subscribe({
         next: (data) => {
@@ -91,5 +104,47 @@ export class ProfileComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  changePassword(): void {
+    if (
+      !this.currentPassword.trim() ||
+      !this.newPassword.trim() ||
+      !this.confirmNewPassword.trim()
+    ) {
+      this.toastr.warning('Completa todos los campos de contraseña');
+      return;
+    }
+
+    if (this.newPassword.length < 6) {
+      this.toastr.warning(
+        'La nueva contraseña debe tener al menos 6 caracteres',
+      );
+      return;
+    }
+
+    if (this.newPassword !== this.confirmNewPassword) {
+      this.toastr.warning('La confirmación de contraseña no coincide');
+      return;
+    }
+
+    this.changingPassword = true;
+
+    this._userService
+      .changePassword(this.currentPassword, this.newPassword)
+      .subscribe({
+        next: () => {
+          this.toastr.success('Contraseña actualizada correctamente');
+          this.currentPassword = '';
+          this.newPassword = '';
+          this.confirmNewPassword = '';
+          this.changingPassword = false;
+        },
+        error: (err) => {
+          const msg = err?.error?.msg || 'No se pudo actualizar la contraseña';
+          this.toastr.error(msg);
+          this.changingPassword = false;
+        },
+      });
   }
 }

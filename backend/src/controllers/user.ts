@@ -165,3 +165,88 @@ export const loadUser = async (req: Request, res: Response) => {
       .json({ msg: "Error del servidor al cargar el usuario" });
   }
 };
+
+export const changePassword = async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        msg: "No se proporcionó token de autenticación",
+      });
+    }
+
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        msg: "Debes enviar la contraseña actual y la nueva contraseña",
+      });
+    }
+
+    if (String(newPassword).length < 6) {
+      return res.status(400).json({
+        success: false,
+        msg: "La nueva contraseña debe tener al menos 6 caracteres",
+      });
+    }
+
+    const decoded: any = jwt.verify(
+      token,
+      process.env.SECRET_KEY || "Jdz237797TH1dp7zjFzM",
+    );
+
+    const user: any = await User.findOne({ where: { email: decoded.email } });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "Usuario no encontrado",
+      });
+    }
+
+    const currentPasswordValid = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+
+    if (!currentPasswordValid) {
+      return res.status(400).json({
+        success: false,
+        msg: "La contraseña actual es incorrecta",
+      });
+    }
+
+    const samePassword = await bcrypt.compare(newPassword, user.password);
+
+    if (samePassword) {
+      return res.status(400).json({
+        success: false,
+        msg: "La nueva contraseña debe ser diferente a la actual",
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+
+    await User.update({ password: passwordHash }, { where: { id: user.id } });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Contraseña actualizada correctamente",
+    });
+  } catch (error) {
+    console.error("Error al cambiar contraseña:", error);
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({
+        success: false,
+        msg: "Token inválido o expirado",
+      });
+    }
+    return res.status(500).json({
+      success: false,
+      msg: "Error del servidor al cambiar la contraseña",
+    });
+  }
+};
