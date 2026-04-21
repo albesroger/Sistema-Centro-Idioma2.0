@@ -43,21 +43,21 @@ class Server {
       const models = await import("./index.js");
       console.log("✅ Modelos importados correctamente");
 
-      // Sincronizar modelos base
+      // Sincronizar modelos base sin alter para evitar el error de demasiadas claves
       console.log("🔄 Sincronizando modelos base...");
       await Promise.all([
-        User.sync({ alter: true }),
-        Task.sync({ alter: true }),
+        User.sync({ force: false }),
+        Task.sync({ force: false }),
       ]);
 
       // Sincronizar modelos de tareas
       console.log("🔄 Sincronizando modelos de tareas...");
       await Promise.all([
-        models.SpeakingTask.sync({ alter: true }),
-        models.ListeningTask.sync({ alter: true }),
-        models.ReadingTask.sync({ alter: true }),
-        models.WritingTask.sync({ alter: true }),
-        Notification.sync(), // no alter: evitamos errores al gestionar FKs existentes
+        models.SpeakingTask.sync({ force: false }),
+        models.ListeningTask.sync({ force: false }),
+        models.ReadingTask.sync({ force: false }),
+        models.WritingTask.sync({ force: false }),
+        Notification.sync({ force: false }),
       ]);
 
       console.log("✅ Base de datos sincronizada correctamente");
