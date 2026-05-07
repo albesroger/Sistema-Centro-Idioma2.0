@@ -33,7 +33,13 @@ export class SingInComponent {
     private _errorsService: ErrorsService,
   ) {}
 
+  sanitizeOnlyLetters(field: 'name' | 'lastname') {
+    this[field] = this[field].replace(/[0-9]/g, '');
+  }
+
   addUser() {
+    const onlyLettersRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+$/;
+
     if (
       this.name == '' ||
       this.lastname == '' ||
@@ -44,6 +50,18 @@ export class SingInComponent {
       this.toastr.error('Por favor, complete todos los campos', 'Error');
       return;
     }
+
+    if (
+      !onlyLettersRegex.test(this.name.trim()) ||
+      !onlyLettersRegex.test(this.lastname.trim())
+    ) {
+      this.toastr.warning(
+        'Nombre y apellidos no deben contener números',
+        'Error',
+      );
+      return;
+    }
+
     if (this.password != this.repeatPassword) {
       this.toastr.warning('Las contraseñas no coinciden', 'Error');
       return;
