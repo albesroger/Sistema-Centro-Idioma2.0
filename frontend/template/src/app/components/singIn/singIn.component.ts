@@ -22,7 +22,6 @@ export class SingInComponent {
   email: string = '';
   password: string = `${this.name}+${123}`;
   repeatPassword: string = `${this.name}+${123}`;
-  credencial: string = '';
   rol: string = 'profesor';
 
   loading: boolean = false;
@@ -31,7 +30,7 @@ export class SingInComponent {
     private toastr: ToastrService,
     private _userService: UserServiceService,
     private router: Router,
-    private _errorsService: ErrorsService
+    private _errorsService: ErrorsService,
   ) {}
 
   addUser() {
@@ -40,8 +39,7 @@ export class SingInComponent {
       this.lastname == '' ||
       this.email == '' ||
       this.password == '' ||
-      this.repeatPassword == '' ||
-      this.credencial == ''
+      this.repeatPassword == ''
     ) {
       this.toastr.error('Por favor, complete todos los campos', 'Error');
       return;
@@ -53,14 +51,14 @@ export class SingInComponent {
     if (this.password.length < 6) {
       this.toastr.warning(
         'La contraseña debe tener al menos 6 caracteres',
-        'Error'
+        'Error',
       );
       return;
     }
     if (this.repeatPassword.length < 6) {
       this.toastr.warning(
         'La contraseña debe tener al menos 6 caracteres',
-        'Error'
+        'Error',
       );
       return;
     }
@@ -72,7 +70,6 @@ export class SingInComponent {
       lastname: this.lastname,
       email: this.email,
       password: this.password,
-      credencial: this.credencial,
       rol: this.rol,
     };
     this.loading = true;
@@ -82,7 +79,7 @@ export class SingInComponent {
         this.loading = false;
         this.toastr.success(
           `Cuenta de ${user.name}${user.lastname} creada correctamente`,
-          'Exito'
+          'Exito',
         );
         this.router.navigate(['/login']);
       },
