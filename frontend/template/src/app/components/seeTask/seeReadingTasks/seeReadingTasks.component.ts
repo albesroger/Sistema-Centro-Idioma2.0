@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { ReadingTask } from '../../../interfaces/task';
 import { TaskService } from '../../../services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TaskTypeService } from '../../../services/changeTaskType.service';
 
 @Component({
   selector: 'app-see-reading-tasks',
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class SeeReadingTasks implements OnInit {
   listTasks: ReadingTask[] = [];
+  searchQuery: Signal<string>;
 
   selectedItems: ReadingTask[] = [];
   allSelected = false;
@@ -22,7 +24,10 @@ export class SeeReadingTasks implements OnInit {
   constructor(
     private _taskService: TaskService,
     private toastr: ToastrService,
-  ) {}
+    private taskTypeService: TaskTypeService,
+  ) {
+    this.searchQuery = this.taskTypeService.getSearchQuery();
+  }
 
   ngOnInit(): void {
     this.getReadingTasks();
@@ -132,5 +137,20 @@ export class SeeReadingTasks implements OnInit {
 
     this.toastr.success('Tareas eliminadas');
     this.getReadingTasks();
+  }
+
+  getDisplayTasks(): ReadingTask[] {
+    const query = this.searchQuery().toLowerCase().trim();
+    if (!query) return this.listTasks;
+
+    return this.listTasks.filter((task) => {
+      return (
+        String(task.task_id).toLowerCase().includes(query) ||
+        String(task.team).toLowerCase().includes(query) ||
+        String(task.name_of_item_writer).toLowerCase().includes(query) ||
+        String(task.status).toLowerCase().includes(query) ||
+        String(task.date).toLowerCase().includes(query)
+      );
+    });
   }
 }
