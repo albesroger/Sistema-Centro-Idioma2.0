@@ -30,7 +30,7 @@ const getModelTask = (type: string) => {
   return model[normalizedType as TaskType];
 };
 
-const TARGET_ROLES = ["lider", "asegurador", "lider_proyecto", "qa"];
+const TARGET_ROLES = ["lider", "asegurador", "qa"];
 
 const getUserFromToken = async (req: Request) => {
   const headerToken = req.headers["authorization"];
