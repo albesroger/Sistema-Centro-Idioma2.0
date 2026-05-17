@@ -32,7 +32,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(() => {
         this.breadcrumbs = this.withHome(
-          this.buildBreadcrumbs(this.route.root)
+          this.buildBreadcrumbs(this.route.root),
         );
         console.log('BC:', this.breadcrumbs); // por si quieres ver qué arma
       });
@@ -48,7 +48,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   private buildBreadcrumbs(
     route: ActivatedRoute,
     url: string = '',
-    breadcrumbs: Breadcrumb[] = []
+    breadcrumbs: Breadcrumb[] = [],
   ): Breadcrumb[] {
     const child = route.firstChild;
     if (!child) return breadcrumbs;
@@ -72,7 +72,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   private withHome(crumbs: Breadcrumb[]): Breadcrumb[] {
     // si no hay nada, devolvemos solo Home
     if (!crumbs.length) {
-      return [{ label: 'Home', url: 'inicioPage' }];
+      return [{ label: 'Home', url: '/homePage' }];
     }
 
     // si estamos en la Home (ruta '') → solo Home
@@ -80,15 +80,17 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
       crumbs.length === 1 &&
       (crumbs[0].url === '/' || crumbs[0].label.toLowerCase() === 'home')
     ) {
-      return [{ label: 'Home', url: "inicioPage" }];
+      return [{ label: 'Home', url: '/homePage' }];
     }
 
     // si ya empieza en Home, dejarlo
     if (crumbs[0].url === '/' || crumbs[0].label.toLowerCase() === 'home') {
+      // normalizar la URL de Home a la ruta principal
+      crumbs[0].url = '/homePage';
       return crumbs;
     }
 
     // en cualquier otro caso, anteponer Home
-    return [{ label: 'Home', url: '/' }, ...crumbs];
+    return [{ label: 'Home', url: '/homePage' }, ...crumbs];
   }
 }
