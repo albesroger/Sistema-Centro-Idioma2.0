@@ -583,8 +583,8 @@
               </td>
 
               <td class="px-2 py-4 whitespace-nowrap text-sm text-center w-12">
-                <p
-                  class="flex justify-center rounded-2xl px-1 py-1"
+                <span
+                  class="inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
                   [ngClass]="
                     item.status === 'aprobada'
                       ? 'bg-green-200 text-green-700'
@@ -595,8 +595,16 @@
                           : 'bg-gray-200 text-gray-700'
                   "
                 >
-                  {{ item.status }}
-                </p>
+                  {{
+                    item.status === 'aprobada'
+                      ? 'A'
+                      : item.status === 'rechazada'
+                        ? 'R'
+                        : item.status === 'pendiente'
+                          ? 'P'
+                          : '-'
+                  }}
+                </span>
               </td>
 
               <td
