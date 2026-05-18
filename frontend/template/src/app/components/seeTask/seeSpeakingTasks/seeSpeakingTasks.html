@@ -438,15 +438,9 @@
                   : 'bg-gray-200 text-gray-700'
               "
             >
-              {{
-                item.status === 'aprobada' || item.status === 'revisada'
-                  ? 'A'
-                  : item.status === 'rechazada'
-                  ? 'R'
-                  : item.status === 'pendiente'
-                  ? 'P'
-                  : '-'
-              }}
+              {{ item.status === 'aprobada' || item.status === 'revisada' ? 'A'
+              : item.status === 'rechazada' ? 'R' : item.status === 'pendiente'
+              ? 'P' : '-' }}
             </span>
           </td>
           <td
