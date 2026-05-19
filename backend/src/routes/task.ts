@@ -8,7 +8,7 @@ const router = Router();
 router.post(
   "/api/tasks/createTask",
   validaterToken,
-  requireRole(["profesor", "lider", "qa", "admin"]),
+  requireRole(["profesor", "lider", "qa"]),
   taskController.createTask,
 );
 router.get("/api/tasks/getTasks", validaterToken, taskController.getAllTasks);
@@ -30,13 +30,13 @@ router.get(
 router.put(
   "/api/tasks/updateTask/:id",
   validaterToken,
-  requireRole(["lider", "qa", "admin"]),
+  requireRole(["profesor", "lider", "qa"]),
   taskController.updateTask,
 );
 router.delete(
   "/api/tasks/deleteTask/:id",
   validaterToken,
-  requireRole(["lider", "qa", "admin"]),
+  requireRole(["lider", "qa"]),
   taskController.deleteTask,
 );
 

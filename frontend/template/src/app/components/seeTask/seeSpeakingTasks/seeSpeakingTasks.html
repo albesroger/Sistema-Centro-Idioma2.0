@@ -426,22 +426,23 @@
             {{ item.nature_of_content }}
           </td>
           <td class="px-2 py-4 whitespace-nowrap text-sm text-center w-12">
-            <span
-              class="inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
-              [ngClass]="
-                item.status === 'aprobada' || item.status === 'revisada'
-                  ? 'bg-green-200 text-green-700'
-                  : item.status === 'pendiente'
-                  ? 'bg-yellow-200 text-yellow-700'
-                  : item.status === 'rechazada'
-                  ? 'bg-red-200 text-red-700'
-                  : 'bg-gray-200 text-gray-700'
-              "
-            >
-              {{ item.status === 'aprobada' || item.status === 'revisada' ? 'A'
-              : item.status === 'rechazada' ? 'R' : item.status === 'pendiente'
-              ? 'P' : '-' }}
-            </span>
+            <div class="flex justify-center">
+              <span
+                class="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-semibold"
+                [ngClass]="
+                  item.status === 'revisada'
+                    ? 'bg-green-600 text-white'
+                    : item.status === 'pendiente'
+                    ? 'bg-yellow-500 text-white'
+                    : item.status === 'rechazada'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-gray-400 text-white'
+                "
+              >
+                {{ item.status === 'revisada' ? 'V' : item.status ===
+                'pendiente' ? 'P' : item.status === 'rechazada' ? 'R' : '?' }}
+              </span>
+            </div>
           </td>
           <td
             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center"

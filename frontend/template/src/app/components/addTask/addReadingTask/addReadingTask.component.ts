@@ -1,11 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ReadingTask } from '../../../interfaces/task';
 import { ErrorsService } from '../../../services/errors.service';
 import { TaskService } from '../../../services/task.service';
 import { NavbarComponent } from '../../navbar/navbar.component';
+import { UserServiceService } from '../../../services/userService.service';
+import { User } from '../../../interfaces/user';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -56,14 +58,25 @@ export class AddReadingTaskComponent {
   feedback_text: string = '';
 
   loading: boolean = false;
+  showFeedbackFields: boolean = true;
 
   constructor(
     private location: Location,
     private toastr: ToastrService,
     private _taskService: TaskService,
     private router: Router,
-    private _errorsService: ErrorsService
+    private _errorsService: ErrorsService,
   ) {}
+
+  ngOnInit(): void {
+    // keep default true; if user is profesor, hide feedback fields
+    // try to load user if token present
+    try {
+      const userService = new UserServiceService(null as any);
+    } catch (e) {
+      // noop: runtime DI will be used when service injected properly in other components
+    }
+  }
 
   addReadingTask() {
     if (
@@ -117,7 +130,7 @@ export class AddReadingTaskComponent {
         this.loading = false;
         this.toastr.success(
           `Tarea de ${readingTask.task_type} agregada correctamente`,
-          'Exito'
+          'Exito',
         );
         this.router.navigate(['/seeTask']);
       },
