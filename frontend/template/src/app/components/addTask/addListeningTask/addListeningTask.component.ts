@@ -9,7 +9,7 @@ import { ListeningTask } from '../../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'add-task',
-  imports: [CommonModule, FormsModule ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './addListeningTask.component.html',
 })
 export class AddListeningTaskComponent implements OnInit {
@@ -18,7 +18,7 @@ export class AddListeningTaskComponent implements OnInit {
   team: string = '';
   name_of_item_writer: string = '';
   date: Date | string = '';
-  status: string = 'revisada';
+  status: string = 'pendiente';
 
   ////////////////////////
   text_source: string = '';
@@ -53,7 +53,7 @@ export class AddListeningTaskComponent implements OnInit {
   feedback_date: string = '';
   feedback_provided_by: string = '';
   feedback_text: string = '';
-  feedback_team: string = ''; 
+  feedback_team: string = '';
 
   loading: boolean = false;
 
@@ -62,7 +62,7 @@ export class AddListeningTaskComponent implements OnInit {
     private toastr: ToastrService,
     private _taskService: TaskService,
     private router: Router,
-    private _errorsService: ErrorsService
+    private _errorsService: ErrorsService,
   ) {}
 
   ngOnInit(): void {}
@@ -119,7 +119,7 @@ export class AddListeningTaskComponent implements OnInit {
         this.loading = false;
         this.toastr.success(
           `Tarea de ${listeningTask.task_type} agregada correctamente`,
-          'Exito'
+          'Exito',
         );
         this.router.navigate(['/seeTask']);
       },
