@@ -30,7 +30,15 @@ const getModelTask = (type: string) => {
   return model[normalizedType as TaskType];
 };
 
-const TARGET_ROLES = ["lider", "asegurador", "qa"];
+const TARGET_ROLES = ["lider", "asegurador", "qa", "calidad"];
+
+const normalizeRole = (role: unknown) => {
+  const normalized = String(role ?? "")
+    .toLowerCase()
+    .trim();
+  if (normalized === "qa") return "calidad";
+  return normalized;
+};
 
 const getUserFromToken = async (req: Request) => {
   const headerToken = req.headers["authorization"];
@@ -51,8 +59,13 @@ const createNotificationsForTask = async (
   senderName: string | null,
   transaction: any,
 ) => {
+  const targetRoles = TARGET_ROLES.map((role) => normalizeRole(role));
   const recipients = await User.findAll({
-    where: { rol: { [Op.in]: TARGET_ROLES } },
+    where: {
+      rol: {
+        [Op.in]: targetRoles,
+      },
+    },
     attributes: ["id", "name", "lastname", "rol"],
     transaction,
   });
@@ -72,6 +85,14 @@ const createNotificationsForTask = async (
 
   await Notification.bulkCreate(notifications, { transaction });
 };
+
+const REVIEW_NOTIFICATION_ROLES = [
+  "profesor",
+  "lider",
+  "asegurador",
+  "qa",
+  "calidad",
+];
 
 export default {
   // Crear una tarea con su subtipo
@@ -421,6 +442,61 @@ export default {
           break;
         default:
           return res.status(400).json({ error: "Tipo de tarea no válido" });
+      }
+
+      // Si el que realiza la actualización es un revisor, notificar a los
+      // profesores y usuarios de QA/Calidad para que vean la revisión.
+      try {
+        const currentUser = await getUserFromToken(req);
+        const currentUserRole = normalizeRole(
+          currentUser?.get ? currentUser.get("rol") : null,
+        );
+        const allowedReviewerRoles = new Set(
+          TARGET_ROLES.map((role) => normalizeRole(role)),
+        );
+
+        if (
+          currentUser &&
+          currentUserRole &&
+          allowedReviewerRoles.has(currentUserRole)
+        ) {
+          const senderName = currentUser.get
+            ? `${currentUser.get("name")} ${currentUser.get("lastname")}`
+            : null;
+
+          const recipients = await User.findAll({
+            where: {
+              rol: {
+                [Op.in]: REVIEW_NOTIFICATION_ROLES.map((role) =>
+                  normalizeRole(role),
+                ),
+              },
+            },
+            attributes: ["id", "rol"],
+          });
+
+          const reviewerId = currentUser.get
+            ? Number(currentUser.get("id"))
+            : null;
+          const notifications = recipients
+            .filter((recipient) => Number((recipient as any).id) !== reviewerId)
+            .map((recipient) => ({
+              task_id: resolvedTaskId,
+              title: "Tarea revisada",
+              message: `La tarea ${resolvedTaskId} ha sido revisada por ${senderName ?? "un revisor"}. Revisa el feedback.`,
+              status: "unread" as const,
+              recipient_id: Number((recipient as any).id),
+              recipient_role: String((recipient as any).rol ?? "profesor"),
+              sender_id: reviewerId,
+              sender_name: senderName,
+            }));
+
+          if (notifications.length > 0) {
+            await Notification.bulkCreate(notifications);
+          }
+        }
+      } catch (notifErr) {
+        console.error("Error creando notificación de revisión:", notifErr);
       }
 
       return res.json({ message: "Tarea actualizada correctamente" });
