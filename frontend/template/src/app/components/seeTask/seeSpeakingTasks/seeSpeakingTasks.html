@@ -430,7 +430,7 @@
               <span
                 class="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-semibold"
                 [ngClass]="
-                  item.status === 'revisada'
+                  item.status === 'aprobada'
                     ? 'bg-green-600 text-white'
                     : item.status === 'pendiente'
                     ? 'bg-yellow-500 text-white'
@@ -439,7 +439,7 @@
                     : 'bg-gray-400 text-white'
                 "
               >
-                {{ item.status === 'revisada' ? 'V' : item.status ===
+                {{ item.status === 'aprobada' ? 'A' : item.status ===
                 'pendiente' ? 'P' : item.status === 'rechazada' ? 'R' : '?' }}
               </span>
             </div>
