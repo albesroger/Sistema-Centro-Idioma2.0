@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/sidebar.service';
+import { UserServiceService } from '../../../services/userService.service';
 
 interface MenuItem {
   label: string;
@@ -24,13 +25,33 @@ export class SidebarComponent implements OnInit {
     //{ label: 'Configuración', icon: 'settings', route: '/dashboard/settings' },
   ];
   isVisible = true;
+  isAdmin = false;
 
-  constructor(private router: Router, private sidebarService: SidebarService) {}
+  get visibleMenuItems(): MenuItem[] {
+    return this.menuItems.filter(
+      (item) => item.route !== '/dashboard/users' || this.isAdmin,
+    );
+  }
+
+  constructor(
+    private router: Router,
+    private sidebarService: SidebarService,
+    private userService: UserServiceService,
+  ) {}
 
   ngOnInit() {
     this.sidebarService.sidebarVisible$.subscribe(
       (visible) => (this.isVisible = visible)
     );
+
+    this.userService.loadUser().subscribe({
+      next: (user) => {
+        this.isAdmin = user.rol === 'admin';
+      },
+      error: () => {
+        this.isAdmin = false;
+      },
+    });
   }
 
   closeSidebar() {

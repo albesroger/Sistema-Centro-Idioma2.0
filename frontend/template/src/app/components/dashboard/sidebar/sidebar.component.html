@@ -22,7 +22,7 @@
 
     <ul class="space-y-1 px-2">
       <li
-        *ngFor="let item of menuItems"
+        *ngFor="let item of visibleMenuItems"
         (click)="navigate(item.route); closeSidebar()"
         class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer"
         [ngClass]="{

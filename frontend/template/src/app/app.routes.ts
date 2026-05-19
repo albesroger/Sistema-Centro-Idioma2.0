@@ -15,6 +15,7 @@ import { AddWritingTaskComponent } from './components/addTask/addWritingTask/add
 import { ReviewTaskComponent } from './components/seeTask/reviewTask/reviewTask.component';
 import { HomeComponent } from './components/dashboard/home/home.component';
 import { CurrentUsersComponent } from './components/dashboard/currentUsers/currentUsers.component';
+import { hasRoleGuard } from './utils/hasRole.guard';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,7 @@ export const routes: Routes = [
       {
         path: 'users',
         component: CurrentUsersComponent,
+        canActivate: [hasRoleGuard],
         data: { breadcrumb: 'Users' },
       },
     ],
