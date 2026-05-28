@@ -69,11 +69,11 @@ export class AddListeningTaskComponent implements OnInit {
 
   addListeningTask() {
     if (
-      (this.task_id == null,
-      this.task_type == '',
-      this.team == '',
-      this.name_of_item_writer == '',
-      this.date == '')
+      this.task_id == null ||
+      this.task_type === '' ||
+      this.team.trim() === '' ||
+      this.name_of_item_writer.trim() === '' ||
+      this.date === ''
     ) {
       this.toastr.error('Por favor, complete todos los campos', 'Error');
       return;

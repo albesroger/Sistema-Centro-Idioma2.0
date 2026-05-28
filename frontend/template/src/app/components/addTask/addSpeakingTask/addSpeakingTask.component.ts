@@ -47,18 +47,18 @@ export class AddSpeakingTaskComponent implements OnInit {
     private toastr: ToastrService,
     private _taskService: TaskService,
     private router: Router,
-    private _errorsService: ErrorsService
+    private _errorsService: ErrorsService,
   ) {}
 
   ngOnInit(): void {}
 
   addSpeakingTask() {
     if (
-      (this.task_id == null,
-      this.task_type == '',
-      this.team == '',
-      this.name_of_item_writer == '',
-      this.date == '')
+      this.task_id == null ||
+      this.task_type === '' ||
+      this.team.trim() === '' ||
+      this.name_of_item_writer.trim() === '' ||
+      this.date === ''
     ) {
       this.toastr.error('Por favor, complete todos los campos', 'Error');
       return;
@@ -95,7 +95,7 @@ export class AddSpeakingTaskComponent implements OnInit {
         this.loading = false;
         this.toastr.success(
           `Tarea de ${speakingTask.task_type} agregada correctamente`,
-          'Exito'
+          'Exito',
         );
         this.router.navigate(['/seeTask']);
       },
