@@ -6,6 +6,8 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { UserServiceService } from '../../../services/userService.service';
+import { TaskService } from '../../../services/task.service';
+import { Task } from '../../../interfaces/task';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
@@ -30,7 +32,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private barChart: any;
   private pieChart: any;
 
-  constructor(private userService: UserServiceService) {}
+  constructor(
+    private userService: UserServiceService,
+    private taskService: TaskService,
+  ) {}
 
   ngOnInit(): void {
     this.cargarDatosDashboard();
@@ -41,25 +46,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   private cargarDatosDashboard(): void {
+    // Cargar usuarios y luego tareas
     this.userService.getUser().subscribe((usuarios: User[]) => {
-      // Contar estudiantes y profesores
-      this.totalLider = usuarios.filter(
-        (user) => user.rol === 'lider'
-      ).length;
+      this.totalLider = usuarios.filter((user) => user.rol === 'lider').length;
       this.totalProfesores = usuarios.filter(
-        (user) => user.rol === 'profesor'
+        (user) => user.rol === 'profesor',
       ).length;
       this.totalAdmin = usuarios.filter((user) => user.rol === 'admin').length;
       this.totalCalidad = usuarios.filter(
-        (user) => user.rol === 'calidad'
+        (user) => user.rol === 'calidad',
       ).length;
 
-      // Configurar gráficos
-      this.configurarGraficos(usuarios);
+      // Cargar tareas para generar el gráfico de barras
+      this.taskService.getTask().subscribe((tareas: Task[]) => {
+        this.configurarGraficos(usuarios, tareas);
+      });
     });
   }
 
-  private configurarGraficos(usuarios: any[]): void {
+  private configurarGraficos(usuarios: any[], tareas: Task[]): void {
     // Destruir gráficos existentes
     if (this.barChart) {
       this.barChart.destroy();
@@ -68,21 +73,62 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.pieChart.destroy();
     }
 
-    // Gráfico de barras - Inscripciones por mes
+    // Gráfico de barras - Inscripciones por mes usando fechas de tareas
+    const lastN = 6;
+    const spanishMonths = [
+      'Ene',
+      'Feb',
+      'Mar',
+      'Abr',
+      'May',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dic',
+    ];
+
+    const labels: string[] = [];
+    const now = new Date();
+    for (let i = lastN - 1; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      labels.push(spanishMonths[d.getMonth()]);
+    }
+
+    const counts = new Array(lastN).fill(0);
+    tareas.forEach((t) => {
+      try {
+        const date = new Date(t.date as any);
+        if (isNaN(date.getTime())) return;
+        const monthsDiff =
+          (now.getFullYear() - date.getFullYear()) * 12 +
+          (now.getMonth() - date.getMonth());
+        if (monthsDiff >= 0 && monthsDiff < lastN) {
+          const idx = lastN - 1 - monthsDiff; // 0 oldest ... last newest
+          counts[idx]++;
+        }
+      } catch (e) {
+        // ignorar fechas inválidas
+      }
+    });
+
     const barCtx = this.barChartRef?.nativeElement.getContext('2d');
     if (barCtx) {
       this.barChart = new Chart(barCtx, {
         type: 'bar',
         data: {
-          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+          labels,
           datasets: [
             {
-              label: 'New Taks',
-              data: [12, 19, 3, 5, 2, 3],
+              label: 'Inscripciones',
+              data: counts,
               backgroundColor: '#3b82f6',
             },
           ],
         },
+        options: { responsive: true },
       });
     }
 
@@ -99,19 +145,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
         data: {
           labels: Object.keys(rolesUsuarios).map((rol) =>
             rol === 'admin'
-              ? 'Administrator'
+              ? 'Administradores'
               : rol === 'profesor'
-              ? 'Teachers'
-              : rol === 'calidad'
-              ? 'Quality Assurance'
-              : rol === 'lider'
-              ? 'Project leader'
-              : ''
+                ? 'Profesores'
+                : rol === 'calidad'
+                  ? 'Calidad'
+                  : rol === 'lider'
+                    ? 'Líderes'
+                    : 'Otro',
           ),
           datasets: [
             {
               data: Object.values(rolesUsuarios),
-              backgroundColor: ['#3b82f6', '#10b981', '#6b7280', '#6b6280'],
+              backgroundColor: [
+                '#3b82f6',
+                '#10b981',
+                '#f59e0b',
+                '#8b5cf6',
+                '#6b7280',
+              ],
             },
           ],
         },

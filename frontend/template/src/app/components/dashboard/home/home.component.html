@@ -2,7 +2,7 @@
   class="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300 rounded-lg"
 >
   <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-    Control panel
+    Panel de control
   </h1>
 
   <!-- Tarjetas de estadísticas -->
@@ -31,7 +31,9 @@
           </svg>
         </div>
         <div>
-          <p class="text-gray-500 dark:text-gray-400 text-sm">Administrator</p>
+          <p class="text-gray-500 dark:text-gray-400 text-sm">
+            Administradores
+          </p>
           <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {{ totalAdmin }}
           </p>
@@ -63,7 +65,7 @@
           </svg>
         </div>
         <div>
-          <p class="text-gray-500 dark:text-gray-400 text-sm">Teachers</p>
+          <p class="text-gray-500 dark:text-gray-400 text-sm">Profesores</p>
           <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {{ totalProfesores }}
           </p>
@@ -95,9 +97,7 @@
           </svg>
         </div>
         <div>
-          <p class="text-gray-500 dark:text-gray-400 text-sm">
-            Quality Assurance
-          </p>
+          <p class="text-gray-500 dark:text-gray-400 text-sm">Calidad</p>
           <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {{ totalCalidad }}
           </p>
@@ -129,7 +129,7 @@
           </svg>
         </div>
         <div>
-          <p class="text-gray-500 dark:text-gray-400 text-sm">Project leader</p>
+          <p class="text-gray-500 dark:text-gray-400 text-sm">Líderes</p>
           <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {{ totalLider }}
           </p>
@@ -145,7 +145,7 @@
       class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-700 transition-colors duration-300"
     >
       <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
-        Monthly Registrations
+        Inscripciones mensuales
       </h2>
       <div style="height: 300px">
         <canvas #barChart></canvas>
@@ -157,7 +157,7 @@
       class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow dark:shadow-gray-700 transition-colors duration-300"
     >
       <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
-        User Distribution
+        Distribución de usuarios
       </h2>
       <div style="height: 300px">
         <canvas #pieChart class="flex-row"></canvas>
